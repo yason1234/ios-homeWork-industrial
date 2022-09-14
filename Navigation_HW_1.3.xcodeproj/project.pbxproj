@@ -25,7 +25,7 @@
 		37D5020728D18F0300EF5622 /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D5020128D18F0300EF5622 /* StorageService.framework */; };
 		37D5020828D18F0300EF5622 /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 37D5020128D18F0300EF5622 /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		37D5020D28D18F2400EF5622 /* NewPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5020C28D18F2400EF5622 /* NewPost.swift */; };
-		37D5020F28D1900100EF5622 /* NewPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5020C28D18F2400EF5622 /* NewPost.swift */; };
+		37D5021028D190FA00EF5622 /* NewPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5020C28D18F2400EF5622 /* NewPost.swift */; };
 		37DEB20D289AAAA800D50CF6 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB20C289AAAA800D50CF6 /* PhotosTableViewCell.swift */; };
 		37DEB20F289AB3E700D50CF6 /* myCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB20E289AB3E700D50CF6 /* myCollectionCell.swift */; };
 		37DEB215289BD8CD00D50CF6 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB214289BD8CD00D50CF6 /* PhotosViewController.swift */; };
@@ -320,7 +320,7 @@
 				377B6B5C287896010008586B /* SceneDelegate.swift in Sources */,
 				37A5F65F287DFA8100317703 /* ProfileHeaderView.swift in Sources */,
 				377B6B7B2878C42E0008586B /* InfoViewController.swift in Sources */,
-				37D5020F28D1900100EF5622 /* NewPost.swift in Sources */,
+				37D5021028D190FA00EF5622 /* NewPost.swift in Sources */,
 				377B6B732878A0280008586B /* PostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

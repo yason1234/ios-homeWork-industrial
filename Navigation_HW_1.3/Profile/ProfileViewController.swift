@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
@@ -30,8 +31,17 @@ class ProfileViewController: UIViewController {
     }
 
     private func configure() {
-
+        
+        #if DEBUG
+        
         view.backgroundColor = .white
+
+        #else
+        
+        view.backgroundColor = .systemBlue
+        
+        #endif
+        
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         myTableView.backgroundColor = .white
         myTableView.register(PostTableViewCell.self, forCellReuseIdentifier: "customCell")
