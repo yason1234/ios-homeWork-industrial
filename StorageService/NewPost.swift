@@ -9,11 +9,11 @@ import Foundation
 
 public struct NewPost {
     
-    let author: String
-    let description: String
-    let image: String
-    let likes: Int
-    let views: Int
+    public let author: String
+    public  let description: String
+    public let image: String
+    public let likes: Int
+    public let views: Int
 }
 
 
@@ -26,4 +26,4 @@ private let post3 = NewPost(author: "bmwRussia", description: "Freude am Fahren 
 private let post4 = NewPost(author: "Harvard_Business_Review", description: "New magazine", image: "harward", likes: 5214, views: 91241)
 
 
-var postArray: [NewPost] = [post1, post2, post3, post4]
+public var postArray: [NewPost] = [post1, post2, post3, post4]
