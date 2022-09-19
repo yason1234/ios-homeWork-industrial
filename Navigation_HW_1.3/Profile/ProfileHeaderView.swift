@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
@@ -60,7 +61,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
          avatarImageView.layer.borderWidth = 3
          avatarImageView.layer.borderColor = UIColor.white.cgColor
          avatarImageView.backgroundColor = .lightGray
-         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        // avatarImageView.translatesAutoresizingMaskIntoConstraints = false
             
             // headLabel
          fullNameLabel.font = .systemFont(ofSize: 18, weight: .bold)
@@ -121,25 +122,50 @@ extension ProfileHeaderView {
 
      func setConstraints() {
          
+         // SnapKit
+         avatarImageView.snp.makeConstraints { make in
+             make.top.equalTo(self.snp.top as ConstraintRelatableTarget).inset(16)
+             make.leading.equalTo(self.snp.leading as ConstraintRelatableTarget).inset(16)
+             make.width.equalTo(self.snp.width as ConstraintRelatableTarget).multipliedBy(0.24)
+             make.height.equalTo(self.avatarImageView.snp.width)
+         }
+         
+         fullNameLabel.snp.makeConstraints { make in
+             make.top.equalTo(self.snp.top).inset(27)
+             make.centerX.equalTo(self.snp.centerX)
+         }
+         
+         statusLabel.snp.makeConstraints { make in
+             make.top.equalTo(self.avatarImageView.snp.centerY).inset(10)
+             make.centerX.equalTo(self.snp.centerX).offset(30)
+         }
+         
+         setStatusButton.snp.makeConstraints { make in
+             make.top.equalTo(self.statusTextField.snp.bottom).offset(10)
+             make.centerX.equalTo(self.snp.centerX)
+             make.width.equalTo(self.snp.width).inset(16)
+             make.height.equalTo(40)
+             make.bottom.equalTo(self.snp.bottom).inset(8)
+         }
+         
+         statusTextField.snp.makeConstraints { make in
+             make.top.equalTo(self.avatarImageView.snp.bottom).offset(10)
+             make.trailing.equalTo(self.snp.trailing).inset(16)
+             make.width.equalTo(self.snp.width).multipliedBy(0.5)
+             make.height.equalTo(30)
+         }
+         
+         // оставляю для анимации, там использую констрейинты, или все придется переписывать на снэпкит
          avatarTopConstraint = self.avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16)
          avatarLeadingConstraint = self.avatarImageView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16)
          avatarWidthConstraint = self.avatarImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.24)
          avatarHeightConstraint =  self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor)
 
         NSLayoutConstraint.activate([
-//            self.avatarImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
-//            self.avatarImageView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-//            self.avatarImageView.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.24),
-//            self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor),
-            
-            avatarTopConstraint,
-            avatarLeadingConstraint,
-            avatarWidthConstraint,
-            avatarHeightConstraint,
-         
+         /*
              self.fullNameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
              self.fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-         
+
             self.statusLabel.topAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 10),
             self.statusLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 30),
 
@@ -152,8 +178,7 @@ extension ProfileHeaderView {
             self.statusTextField.topAnchor.constraint(equalTo: self.avatarImageView.bottomAnchor, constant: 10),
             self.statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -32),
             self.statusTextField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5),
-            self.statusTextField.heightAnchor.constraint(equalToConstant: 30)])
-         
+            self.statusTextField.heightAnchor.constraint(equalToConstant: 30)*/])
     }
 }
 

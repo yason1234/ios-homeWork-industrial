@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PostTableViewCell: UITableViewCell {
 
@@ -104,7 +105,20 @@ class PostTableViewCell: UITableViewCell {
     
     func configureViews(authorNew: String, avatar: String, description: String, likes: Int, views: Int) {
         author.text = authorNew
-        avatarImageView.image = UIImage(named: avatar)
+
+        guard let avatarImage = UIImage(named: avatar) else {return}
+        let process = ImageProcessor()
+        
+//        process.processImage(sourceImage: avatarImage, filter: .colorInvert) { imageNew in
+//            avatarImageView.image = imageNew
+//        }
+        
+        process.processImageAsync(sourceImage: avatarImage, filter: .process) { image in
+            DispatchQueue.main.async {
+                let imageNew = UIImage(cgImage: image!)
+                self.avatarImageView.image = imageNew
+            }
+        }
         descriptionLabel.text = description
         likesLabel.text = "Likes: \(likes)"
         viewsLabel.text = "Views: \(views)"
