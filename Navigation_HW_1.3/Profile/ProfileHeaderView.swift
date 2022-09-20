@@ -52,10 +52,18 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
          addSubview(statusTextField)
     }
     
+    //MARK: setup User
+    func setupUser(avatar: UIImage, status: String, fullname: String) {
+        
+        avatarImageView.image = avatar
+        fullNameLabel.text = fullname
+        statusLabel.text = status
+    }
+    
      func configureViews() {
         
         // UIimage
-         avatarImageView.image = UIImage(named: "Michel_Muller")
+        // avatarImageView.image = UIImage(named: "Michel_Muller")
          avatarImageView.clipsToBounds = true
          avatarImageView.layer.borderWidth = 3
          avatarImageView.layer.borderColor = UIColor.white.cgColor
@@ -105,9 +113,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         statusTextField.delegate = delegate
     }
     
-    func giveData() -> (UIImage, NSLayoutConstraint, NSLayoutConstraint) {
+    func giveData() -> (UIImage?, NSLayoutConstraint, NSLayoutConstraint) {
 
-        return (avatarImageView.image!, avatarTopConstraint, avatarLeadingConstraint)
+        return (delegate?.setImage(), avatarTopConstraint, avatarLeadingConstraint)
     }
     
     var avatarTopConstraint: NSLayoutConstraint = NSLayoutConstraint()

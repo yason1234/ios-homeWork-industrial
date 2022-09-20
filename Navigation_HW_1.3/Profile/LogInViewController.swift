@@ -15,6 +15,7 @@ class LogInViewController: UIViewController {
     private lazy var loginTextField = UITextField()
     private lazy var passwordTexfField = UITextField()
     private lazy var loginButton = UIButton(configuration: UIButton.Configuration.filled(), primaryAction: nil)
+    private lazy var currentUserService = CurrentUserService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,7 +128,14 @@ extension LogInViewController {
     @objc private func pushToVC() {
         
         let newVC = ProfileViewController()
-        navigationController?.pushViewController(newVC, animated: true)
+        guard let logText = loginTextField.text, let passText = passwordTexfField.text else { return }
+        if let user = currentUserService.check(login: logText, password: passText) {
+            navigationController?.pushViewController(newVC, animated: true)
+            newVC.setUser(user: user)
+        } else {
+            print("incorrect")
+        }
+        
     }
 }
 

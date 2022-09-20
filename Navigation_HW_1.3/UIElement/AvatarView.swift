@@ -61,9 +61,10 @@ class AvatarView: UIView {
     lazy var avatarWidthConstraint: NSLayoutConstraint = NSLayoutConstraint()
     lazy var avatarHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
     
-    func setViews(data: (UIImage, NSLayoutConstraint, NSLayoutConstraint)) {
+    func setViews(data: (UIImage?, NSLayoutConstraint, NSLayoutConstraint)) {
         
-        avatarImage.image = data.0
+        guard let image = data.0 else {return}
+        avatarImage.image = image
         
         avatarTopConstraint = avatarImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: data.1.constant)
         avatarLeadingConstraint = avatarImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: data.2.constant)

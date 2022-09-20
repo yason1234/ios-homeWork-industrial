@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController {
     private lazy var model: [NewPost] = postArray
     private lazy var image = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "wwdc"]
     private lazy var avatarView = AvatarView()
+    private var user: User?
 
 
     override func viewDidLoad() {
@@ -55,7 +56,18 @@ class ProfileViewController: UIViewController {
         avatarView.backgroundColor = .white
         //avatarView.alpha = 0.5
         avatarView.isHidden = true
-
+    }
+    
+    //MARK: give image for animation
+    func setImage() -> UIImage {
+        guard let user = user else {
+            return UIImage(named: "person")!
+        }
+        return user.avatar
+    }
+    
+    func setUser(user: User) {
+        self.user = user
     }
 }
 
@@ -99,6 +111,8 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
             header.setDelegate()
             header.addAnimation()
             avatarView.setViews(data: header.giveData())
+            guard let user = user else { return UIView()}
+            header.setupUser(avatar: user.avatar, status: user.status, fullname: user.fullName)
             return header
         }
         return nil

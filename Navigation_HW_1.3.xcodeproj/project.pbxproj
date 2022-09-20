@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37625E8728D979500016FA3F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625E8628D979500016FA3F /* User.swift */; };
+		37625E8928D97B6D0016FA3F /* listOfUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625E8828D97B6D0016FA3F /* listOfUsers.swift */; };
 		377B6B5A287896010008586B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B59287896010008586B /* AppDelegate.swift */; };
 		377B6B5C287896010008586B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B5B287896010008586B /* SceneDelegate.swift */; };
 		377B6B63287896020008586B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 377B6B62287896020008586B /* Assets.xcassets */; };
@@ -57,6 +59,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		37625E8628D979500016FA3F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		37625E8828D97B6D0016FA3F /* listOfUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listOfUsers.swift; sourceTree = "<group>"; };
 		377B6B56287896010008586B /* Navigation_HW_1.3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation_HW_1.3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		377B6B59287896010008586B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		377B6B5B287896010008586B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 			isa = PBXGroup;
 			children = (
 				377B6B752878A0530008586B /* Post.swift */,
+				37625E8628D979500016FA3F /* User.swift */,
+				37625E8828D97B6D0016FA3F /* listOfUsers.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -302,6 +308,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				377B6B7D2878C48A0008586B /* ButtonAlert.swift in Sources */,
+				37625E8928D97B6D0016FA3F /* listOfUsers.swift in Sources */,
 				377B6B5A287896010008586B /* AppDelegate.swift in Sources */,
 				3785A87A28966249004C31EA /* PostTableViewCell.swift in Sources */,
 				37DEB20F289AB3E700D50CF6 /* myCollectionCell.swift in Sources */,
@@ -315,6 +322,7 @@
 				37DEB20D289AAAA800D50CF6 /* PhotosTableViewCell.swift in Sources */,
 				377B6B762878A0530008586B /* Post.swift in Sources */,
 				377B6B5C287896010008586B /* SceneDelegate.swift in Sources */,
+				37625E8728D979500016FA3F /* User.swift in Sources */,
 				37A5F65F287DFA8100317703 /* ProfileHeaderView.swift in Sources */,
 				377B6B7B2878C42E0008586B /* InfoViewController.swift in Sources */,
 				377B6B732878A0280008586B /* PostViewController.swift in Sources */,
