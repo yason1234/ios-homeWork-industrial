@@ -30,8 +30,12 @@ final class CurrentUserService: UserService {
     var user: User?
     
     func check(login: String, password: String) -> User? {
+       
         for user in users {
-           return user.login == login ? user : nil
+            print(user.login)
+            if user.login == login {
+                return user
+            }
         }
         return nil
     }

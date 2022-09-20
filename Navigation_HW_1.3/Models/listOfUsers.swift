@@ -7,6 +7,6 @@
 
 import UIKit
 
-public var dictOUsers: [String: String] = ["yason": "1234", "spirit": "5678", "artist": "qwerty"]
+//public var dictOUsers: [String: String] = ["yason": "1234", "spirit": "5678", "artist": "qwerty"]
 
 var users: [User] = [User(login: "yason", fullName: "Dima Shikhalev", avatar: UIImage(named: "bmw")!, status: "whats up"), User(login: "polina", fullName: "Polina Khomko", avatar: UIImage(named: "Michel_Muller")!, status: "hello")]

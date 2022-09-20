@@ -128,12 +128,18 @@ extension LogInViewController {
     @objc private func pushToVC() {
         
         let newVC = ProfileViewController()
-        guard let logText = loginTextField.text, let passText = passwordTexfField.text else { return }
-        if let user = currentUserService.check(login: logText, password: passText) {
+        guard let loginText = loginTextField.text, let passText = passwordTexfField.text else { return }
+        if let user = currentUserService.check(login: loginText, password: passText) {
             navigationController?.pushViewController(newVC, animated: true)
             newVC.setUser(user: user)
         } else {
-            print("incorrect")
+            let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
+            let actrion = UIAlertAction(title: "Ok", style: .default) { _ in
+                self.loginTextField.becomeFirstResponder()
+            }
+            
+            alertController.addAction(actrion)
+            self.present(alertController, animated: true, completion: nil)
         }
         
     }
