@@ -16,6 +16,7 @@ class LogInViewController: UIViewController {
     private lazy var passwordTexfField = UITextField()
     private lazy var loginButton = UIButton(configuration: UIButton.Configuration.filled(), primaryAction: nil)
     private lazy var currentUserService = CurrentUserService()
+    private lazy var testUserService = TestUserService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,6 +130,8 @@ extension LogInViewController {
         
         let newVC = ProfileViewController()
         guard let loginText = loginTextField.text, let passText = passwordTexfField.text else { return }
+       
+        #if DEBUG
         if let user = currentUserService.check(login: loginText, password: passText) {
             navigationController?.pushViewController(newVC, animated: true)
             newVC.setUser(user: user)
@@ -142,6 +145,21 @@ extension LogInViewController {
             self.present(alertController, animated: true, completion: nil)
         }
         
+        #else
+        if let user = testUserService.check(login: loginText, password: passText) {
+            navigationController?.pushViewController(newVC, animated: true)
+            newVC.setUser(user: user)
+        } else {
+            let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
+            let actrion = UIAlertAction(title: "Ok", style: .default) { _ in
+                self.loginTextField.becomeFirstResponder()
+            }
+            
+            alertController.addAction(actrion)
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        #endif
     }
 }
 

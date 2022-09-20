@@ -40,3 +40,18 @@ final class CurrentUserService: UserService {
         return nil
     }
 }
+
+final class TestUserService: UserService {
+   
+    private lazy var user = User(login: "Wa5ili4", fullName: "Kirill", avatar: UIImage(named: "jordan")!, status: "child")
+    
+    func check(login: String, password: String) -> User? {
+        if user.login == login {
+            return user
+        }
+        return nil
+    }
+    
+    
+    
+}
