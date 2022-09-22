@@ -18,7 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         let feedVC = UINavigationController(rootViewController: FeedViewController())
        // let profileVC = UINavigationController(rootViewController: ProfileViewController())
-        let loginVC = UINavigationController(rootViewController: LogInViewController())
+        let loginController = LogInViewController()
+        loginController.setupDelegate(delegate: LoginInspector())
+        let loginVC = UINavigationController(rootViewController: loginController)
         
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [feedVC, loginVC]

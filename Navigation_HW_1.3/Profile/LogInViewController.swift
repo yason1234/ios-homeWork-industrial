@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol LoginViewControllerDelegate {
+    
+    func check(login: String, password: String) -> Bool
+}
+
 class LogInViewController: UIViewController {
     
     private lazy var myScrollView = UIScrollView()
@@ -15,8 +20,7 @@ class LogInViewController: UIViewController {
     private lazy var loginTextField = UITextField()
     private lazy var passwordTexfField = UITextField()
     private lazy var loginButton = UIButton(configuration: UIButton.Configuration.filled(), primaryAction: nil)
-    private lazy var currentUserService = CurrentUserService()
-    private lazy var testUserService = TestUserService()
+    private var loginDelegate: LoginViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +48,11 @@ class LogInViewController: UIViewController {
         myScrollView.addSubview(loginButton)
         loginTextField.delegate = self
         passwordTexfField.delegate = self
+    }
+    
+    //MARK: setup Delegate
+    func setupDelegate(delegate: LoginViewControllerDelegate) {
+        loginDelegate = delegate
     }
     
     private func configure() {
@@ -130,23 +139,16 @@ extension LogInViewController {
         
         let newVC = ProfileViewController()
         guard let loginText = loginTextField.text, let passText = passwordTexfField.text else { return }
-       
+       /*
         #if DEBUG
-        if let user = currentUserService.check(login: loginText, password: passText) {
-            navigationController?.pushViewController(newVC, animated: true)
-            newVC.setUser(user: user)
-        } else {
-            let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
-            let actrion = UIAlertAction(title: "Ok", style: .default) { _ in
-                self.loginTextField.becomeFirstResponder()
-            }
-            
-            alertController.addAction(actrion)
-            self.present(alertController, animated: true, completion: nil)
-        }
+        let userService = CurrentUserService()
         
         #else
-        if let user = testUserService.check(login: loginText, password: passText) {
+        let userService = CurrentUserService()
+        
+        #endif
+        
+        if let user = userService.check(login: loginText, password: passText) {
             navigationController?.pushViewController(newVC, animated: true)
             newVC.setUser(user: user)
         } else {
@@ -157,9 +159,21 @@ extension LogInViewController {
             
             alertController.addAction(actrion)
             self.present(alertController, animated: true, completion: nil)
-        }
+        }*/
         
-        #endif
+        guard let delegate = loginDelegate else {return}
+        if delegate.check(login: loginText, password: passText) {
+            navigationController?.pushViewController(newVC, animated: true)
+            newVC.setUser(user: Checker.shared.user)
+        } else {
+            let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
+            let actrion = UIAlertAction(title: "Ok", style: .default) { _ in
+                self.loginTextField.becomeFirstResponder()
+            }
+            
+            alertController.addAction(actrion)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }
 
