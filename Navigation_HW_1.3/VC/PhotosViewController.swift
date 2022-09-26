@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     private lazy var layout = UICollectionViewFlowLayout()
     private lazy var photosCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     lazy var photoArray = [String]()
+    private lazy var imageFacade = ImagePublisherFacade()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,11 +22,14 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         setupViews()
         configure()
         setConstraints()
+        imageFacade.subscribe(self)
+        imageFacade.addImagesWithTimer(time: 0.5, repeat: 10, userImages: [UIImage(named: "plus")!])
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = true
+        imageFacade.removeSubscription(for: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,4 +97,12 @@ extension PhotosViewController {
             photosCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+}
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    
+    func receive(images: [UIImage]) {
+        
+    }
+    
 }
