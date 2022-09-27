@@ -7,13 +7,20 @@
 
 import UIKit
 import iOSIntPackage
+protocol PhotosDelegate {
+    
+    func setImage(image: UIImage?)
+}
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     private lazy var layout = UICollectionViewFlowLayout()
     private lazy var photosCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     lazy var photoArray = [String]()
+    private lazy var arrayForFacade = [UIImage]()
+    lazy var imageArray = [UIImage]()
     private lazy var imageFacade = ImagePublisherFacade()
+    weak var delegate: PhotosCollectionViewCell?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +29,8 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         setupViews()
         configure()
         setConstraints()
+        setupArray()
         imageFacade.subscribe(self)
-        imageFacade.addImagesWithTimer(time: 0.5, repeat: 10, userImages: [UIImage(named: "plus")!])
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,6 +47,14 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     private func setupViews() {
         
         view.addSubview(photosCollectionView)
+    }
+    
+    private func setupArray() {
+        
+        photoArray.forEach { photo in
+            self.arrayForFacade.append(UIImage(named: photo)!)
+        }
+        imageFacade.addImagesWithTimer(time: 1, repeat: 21, userImages: arrayForFacade)
     }
     
     private func configure() {
@@ -63,13 +78,14 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
 extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photoArray.count
+        imageArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotosCollectionViewCell else {return UICollectionViewCell()}
-        cell.setImage(name: photoArray[indexPath.row])
+       // cell.setImage(name: photoArray[indexPath.row])
+        cell.setImage(image: imageArray[indexPath.row])
         cell.contentView.layer.cornerRadius = 15
         cell.contentView.layer.masksToBounds = true
         cell.contentView.clipsToBounds = true
@@ -103,6 +119,9 @@ extension PhotosViewController: ImageLibrarySubscriber {
     
     func receive(images: [UIImage]) {
         
+        imageArray = images
+
+        photosCollectionView.reloadData()
     }
     
 }

@@ -7,7 +7,9 @@
 
 import UIKit
 
-class PhotosCollectionViewCell: UICollectionViewCell {
+ 
+
+class PhotosCollectionViewCell: UICollectionViewCell, PhotosDelegate {
     
     private lazy var photoImage = UIImageView()
     
@@ -32,6 +34,12 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         
         photoImage.image = UIImage(named: name)
     }
+    
+    func setImage(image: UIImage?) {
+    
+        photoImage.image = image
+    }
+    
 }
 
 extension PhotosCollectionViewCell {
