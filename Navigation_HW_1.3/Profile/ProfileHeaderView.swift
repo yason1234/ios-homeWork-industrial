@@ -12,7 +12,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var avatarImageView = UIImageView()
     private lazy var fullNameLabel = UILabel()
     private lazy var statusLabel = UILabel()
-    private lazy var setStatusButton = UIButton()
+    private lazy var setStatusButton = CustomButton(title: "Show status", titleColor: nil, backColor: .systemBlue, mask: false, action: {[weak self] in
+        self?.statusLabel.text = self?.statusText
+    }
+    ) /*UIButton()*/
     private lazy var statusTextField = UITextField()
     private var statusText: String?
     
@@ -39,7 +42,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         setupViews()
         setConstraints()
         configureViews()
-        actionStatusButton()
+     //   actionStatusButton()
         statusTexfFieldAction()
     }
 
@@ -86,7 +89,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
          statusLabel.translatesAutoresizingMaskIntoConstraints = false
             
             // statusButton
-         setStatusButton.setTitle("Show status", for: .normal)
+        // setStatusButton.setTitle("Show status", for: .normal)
          setStatusButton.backgroundColor = .systemBlue
          setStatusButton.tintColor = .white
          setStatusButton.layer.cornerRadius = 15
@@ -169,15 +172,15 @@ extension ProfileHeaderView {
 
 extension ProfileHeaderView {
     
-    func actionStatusButton() {
-        
-        setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-    }
-    
-    @objc func buttonPressed() {
-        
-        statusLabel.text = statusText
-    }
+//    func actionStatusButton() {
+//
+//        setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+//    }
+//
+//    @objc func buttonPressed() {
+//
+//        statusLabel.text = statusText
+//    }
     
     func statusTexfFieldAction() {
         

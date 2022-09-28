@@ -11,8 +11,8 @@ final class Checker {
     
     static let shared = Checker()
     
-    private let login = "qwerty"
-    private let password = "kerk1234"
+    private let login = ""
+    private let password = ""
     let user = User(login: "qwerty", fullName: "Dima", avatar: UIImage(named: "bmw")!, status: "Hi guys")
     
     func check(login: String, password: String) -> Bool {

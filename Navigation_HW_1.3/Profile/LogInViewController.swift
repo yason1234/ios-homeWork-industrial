@@ -20,6 +20,7 @@ class LogInViewController: UIViewController {
     private lazy var loginTextField = UITextField()
     private lazy var passwordTexfField = UITextField()
     private lazy var loginButton = UIButton(configuration: UIButton.Configuration.filled(), primaryAction: nil)
+    
     private var loginDelegate: LoginViewControllerDelegate?
 
     override func viewDidLoad() {

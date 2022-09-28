@@ -10,8 +10,33 @@ import UIKit
 class AvatarView: UIView {
     
     private lazy var avatarImage = UIImageView(frame: .zero)
-    private lazy var reverseAnimationButton = UIButton()
+    private lazy var reverseAnimationButton = CustomButton(title: nil, titleColor: nil, backColor: nil, mask: true, action: closure)
     private lazy var startPoint: CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+    private lazy var closure: () -> Void = { [weak self] in
+        UIView.animateKeyframes(withDuration: 0.8,
+                                delay: 0,
+                                options: .calculationModeCubic) {
+            UIView.animateKeyframes(withDuration: 0.8,
+                                    delay: 0,
+                                    options: .calculationModeCubic) {
+                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.625) {
+                    self?.avatarImage.translatesAutoresizingMaskIntoConstraints = true
+                    self?.avatarImage.frame = self!.startPoint
+                    self?.boolForCornerRaduis.toggle()
+                    self?.alpha = 0
+
+                    self?.layoutIfNeeded()
+                }
+                
+                UIView.addKeyframe(withRelativeStartTime: 0.625, relativeDuration: 0.375) {
+                    self?.reverseAnimationButton.alpha = 0
+                }
+            } completion: { _ in
+                self?.isSmall.toggle()
+            }
+        }
+    
+    }
     
     var isSmall: Bool  {
         get {
@@ -27,7 +52,7 @@ class AvatarView: UIView {
         super.init(frame: frame)
         
         configure()
-        stopAnimation()
+        //stopAnimation()
     }
     
     required init?(coder: NSCoder) {
@@ -108,7 +133,7 @@ class AvatarView: UIView {
             }
         } 
     }
-    
+    /*
     func stopAnimation() {
         
         self.reverseAnimationButton.addTarget(self, action: #selector(reverseAnimation), for: .touchUpInside)
@@ -139,5 +164,5 @@ class AvatarView: UIView {
                 self.isSmall.toggle()
             }
         }
-    }
+    }*/
 }
