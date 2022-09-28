@@ -9,7 +9,7 @@ import UIKit
 
  
 
-class PhotosCollectionViewCell: UICollectionViewCell, PhotosDelegate {
+class PhotosCollectionViewCell: UICollectionViewCell {
     
     private lazy var photoImage = UIImageView()
     

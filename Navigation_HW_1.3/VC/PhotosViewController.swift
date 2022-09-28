@@ -7,10 +7,6 @@
 
 import UIKit
 import iOSIntPackage
-protocol PhotosDelegate {
-    
-    func setImage(image: UIImage?)
-}
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
@@ -20,7 +16,6 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     private lazy var arrayForFacade = [UIImage]()
     lazy var imageArray = [UIImage]()
     private lazy var imageFacade = ImagePublisherFacade()
-    weak var delegate: PhotosCollectionViewCell?
 
     override func viewDidLoad() {
         super.viewDidLoad()
