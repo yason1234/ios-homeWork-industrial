@@ -31,6 +31,7 @@
 		37D5020D28D18F2400EF5622 /* NewPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D5020C28D18F2400EF5622 /* NewPost.swift */; };
 		37DC3C0B28E0D7F700366CC5 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 37DC3C0A28E0D7F700366CC5 /* iOSIntPackage */; };
 		37DC3C1028E4B44000366CC5 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DC3C0F28E4B44000366CC5 /* CustomButton.swift */; };
+		37DC3C1328E557A400366CC5 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DC3C1228E557A400366CC5 /* FeedModel.swift */; };
 		37DEB20D289AAAA800D50CF6 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB20C289AAAA800D50CF6 /* PhotosTableViewCell.swift */; };
 		37DEB20F289AB3E700D50CF6 /* myCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB20E289AB3E700D50CF6 /* myCollectionCell.swift */; };
 		37DEB215289BD8CD00D50CF6 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB214289BD8CD00D50CF6 /* PhotosViewController.swift */; };
@@ -87,6 +88,7 @@
 		37D5020328D18F0300EF5622 /* StorageService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StorageService.h; sourceTree = "<group>"; };
 		37D5020C28D18F2400EF5622 /* NewPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPost.swift; sourceTree = "<group>"; };
 		37DC3C0F28E4B44000366CC5 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		37DC3C1228E557A400366CC5 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		37DEB20C289AAAA800D50CF6 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		37DEB20E289AB3E700D50CF6 /* myCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myCollectionCell.swift; sourceTree = "<group>"; };
 		37DEB214289BD8CD00D50CF6 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				37625E8828D97B6D0016FA3F /* listOfUsers.swift */,
 				37625E8A28DC1EAB0016FA3F /* Checker.swift */,
 				37625E8C28DC20C30016FA3F /* LoginInspector.swift */,
+				37DC3C1228E557A400366CC5 /* FeedModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -328,6 +331,7 @@
 				377B6B7D2878C48A0008586B /* ButtonAlert.swift in Sources */,
 				37625E8928D97B6D0016FA3F /* listOfUsers.swift in Sources */,
 				377B6B5A287896010008586B /* AppDelegate.swift in Sources */,
+				37DC3C1328E557A400366CC5 /* FeedModel.swift in Sources */,
 				3785A87A28966249004C31EA /* PostTableViewCell.swift in Sources */,
 				37DEB20F289AB3E700D50CF6 /* myCollectionCell.swift in Sources */,
 				37BD6DEA2893DBE700A4D09B /* LogInViewController.swift in Sources */,
