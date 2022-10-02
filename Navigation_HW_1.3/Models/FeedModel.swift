@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 class FeedModel {
     
@@ -20,14 +19,5 @@ class FeedModel {
     func check(word: String) -> Bool {
         
         return secretWord == word ? true : false
-    }
-    
-    func setAlertController(titleController: String, message: String, titleAction: String, VC: UIViewController?) {
-        
-        let alertController = UIAlertController(title: titleController, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: titleAction, style: .default)
-        
-        alertController.addAction(action)
-        VC?.present(alertController, animated: true, completion: nil)
     }
 }

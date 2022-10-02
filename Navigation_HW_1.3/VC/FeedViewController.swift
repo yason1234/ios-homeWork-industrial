@@ -18,6 +18,7 @@ class FeedViewController: UIViewController {
     private lazy var checkGuessButton = CustomButton(title: "check", titleColor: nil, backColor: .systemBlue, mask: false, action: closure)
     private lazy var checkLabel = UILabel()
     private lazy var feedModel = FeedModel(word: "netologia")
+    private var alert: AlertProtocol = Alert()
     
     private lazy var closure: () -> Void = { [weak self] in
         
@@ -25,11 +26,11 @@ class FeedViewController: UIViewController {
         if !text.isEmpty {
        
             self?.checkLabel.backgroundColor = self!.feedModel.check(word: text) ? .systemGreen : .systemRed
-            self!.feedModel.check(word: text) ? self?.feedModel.setAlertController(titleController: "Успешно", message: "Проверка по слову пройдена", titleAction: "ok", VC: self) :
-            self?.feedModel.setAlertController(titleController: "Ошибка", message: "Проверка по слову не пройдена", titleAction: "ok", VC: self)
+            self!.feedModel.check(word: text) ? self?.alert.setAlertController(titleController: "Успешно", message: "Проверка по слову пройдена", titleAction: "ok", VC: self) :
+            self?.alert.setAlertController(titleController: "Ошибка", message: "Проверка по слову не пройдена", titleAction: "ok", VC: self)
         } else {
             
-            self!.feedModel.setAlertController(titleController: "Пусто", message: "Необходимо ввести текст", titleAction: "ok", VC: self)
+            self!.alert.setAlertController(titleController: "Пусто", message: "Необходимо ввести текст", titleAction: "ok", VC: self)
         }
     }
     
