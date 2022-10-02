@@ -10,25 +10,18 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var coordinator: AppCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        window = UIWindow(windowScene: windowScene)
-        let feedVC = UINavigationController(rootViewController: FeedViewController())
-        let myLoginFactory = MyLoginFactory()
-        let loginVC = UINavigationController(rootViewController: myLoginFactory.returnLoginVC())
+        let factory = AppFactory()
+        let appCoordinator = AppCoordinator(factory: factory)
         
-        let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [feedVC, loginVC]
-        
-        tabBarController.viewControllers?.enumerated().forEach({
-            $1.tabBarItem.title = $0 == 0 ? "feed" : "profile"
-            $1.tabBarItem.image = $0 == 0 ? UIImage(systemName: "bag") : UIImage(systemName: "creditcard")
-        })
-        
-        window?.rootViewController = tabBarController
+        self.window = UIWindow(windowScene: windowScene)
+        self.coordinator = appCoordinator
+
+        window?.rootViewController = coordinator?.start()
         window?.makeKeyAndVisible()
         
     }

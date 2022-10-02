@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol LoginViewControllerDelegate {
-    
-    func check(login: String, password: String) -> Bool
-}
-
 class LogInViewController: UIViewController {
     
     private lazy var myScrollView = UIScrollView()
@@ -20,9 +15,19 @@ class LogInViewController: UIViewController {
     private lazy var loginTextField = UITextField()
     private lazy var passwordTexfField = UITextField()
     private lazy var loginButton = UIButton(configuration: UIButton.Configuration.filled(), primaryAction: nil)
+    weak var coordinator: ProfileCoordinator?
     
-    private var loginDelegate: LoginViewControllerDelegate?
-
+    private let viewModel: ProfileModelProtocol?
+        
+    init(viewModel: ProfileModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -49,11 +54,6 @@ class LogInViewController: UIViewController {
         myScrollView.addSubview(loginButton)
         loginTextField.delegate = self
         passwordTexfField.delegate = self
-    }
-    
-    //MARK: setup Delegate
-    func setupDelegate(delegate: LoginViewControllerDelegate) {
-        loginDelegate = delegate
     }
     
     private func configure() {
@@ -138,7 +138,6 @@ extension LogInViewController {
     
     @objc private func pushToVC() {
         
-        let newVC = ProfileViewController()
         guard let loginText = loginTextField.text, let passText = passwordTexfField.text else { return }
        /*
         #if DEBUG
@@ -162,10 +161,9 @@ extension LogInViewController {
             self.present(alertController, animated: true, completion: nil)
         }*/
         
-        guard let delegate = loginDelegate else {return}
+        guard let delegate = viewModel?.checkDelegate else {return}
         if delegate.check(login: loginText, password: passText) {
-            navigationController?.pushViewController(newVC, animated: true)
-            newVC.setUser(user: Checker.shared.user)
+            viewModel?.push()
         } else {
             let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
             let actrion = UIAlertAction(title: "Ok", style: .default) { _ in

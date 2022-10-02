@@ -12,12 +12,10 @@ class FeedModel {
     private let secretWord: String
     
     init(word: String) {
-        
         secretWord = word
     }
     
     func check(word: String) -> Bool {
-        
         return secretWord == word ? true : false
     }
 }

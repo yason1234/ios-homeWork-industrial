@@ -18,8 +18,19 @@ class FeedViewController: UIViewController {
     private lazy var checkGuessButton = CustomButton(title: "check", titleColor: nil, backColor: .systemBlue, mask: false, action: closure)
     private lazy var checkLabel = UILabel()
     private lazy var feedModel = FeedModel(word: "netologia")
+    
     private var alert: AlertProtocol = Alert()
     
+    private let feedModel1: FeedModelProtocol
+    
+    init(viewModel: FeedModelProtocol) {
+        self.feedModel1 = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     private lazy var closure: () -> Void = { [weak self] in
         
         guard let text = self?.checkTextField.text?.lowercased() else {return}
@@ -93,9 +104,10 @@ extension FeedViewController {
     
     @objc private func pushVC() {
         
-        let newVC = PostViewController()
-        navigationController?.pushViewController(newVC, animated: true)
-        newVC.title = post.title
+//        let newVC = PostViewController()
+//        navigationController?.pushViewController(newVC, animated: true)
+        feedModel1.push()
+     //   newVC.title = post.title
         self.tabBarController?.hidesBottomBarWhenPushed = true
     }
 }
