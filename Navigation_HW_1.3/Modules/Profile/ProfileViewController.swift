@@ -130,10 +130,7 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-//            let newVC = PhotosViewController()
-//            newVC.photoArray = image
-//            navigationController?.pushViewController(newVC, animated: true)
-            viewModel.pushPhotosVC(image: image)
+            viewModel.updateState(viewInput: .arrowDidTap(image))
         }
     }
 }

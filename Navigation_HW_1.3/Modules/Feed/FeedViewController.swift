@@ -9,7 +9,6 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-   // private lazy var buttonPost = ButtonFeed()
     var post = Post(title: "Post")
     private lazy var someStackView = UIStackView()
     private lazy var pushPostButton1 = ButtonFeed()
@@ -17,14 +16,13 @@ class FeedViewController: UIViewController {
     private lazy var checkTextField = UITextField()
     private lazy var checkGuessButton = CustomButton(title: "check", titleColor: nil, backColor: .systemBlue, mask: false, action: closure)
     private lazy var checkLabel = UILabel()
-    private lazy var feedModel = FeedModel(word: "netologia")
     
     private var alert: AlertProtocol = Alert()
     
-    private let feedModel1: FeedModelProtocol
+    private let viewModel: FeedModelProtocol
     
     init(viewModel: FeedModelProtocol) {
-        self.feedModel1 = viewModel
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -35,9 +33,9 @@ class FeedViewController: UIViewController {
         
         guard let text = self?.checkTextField.text?.lowercased() else {return}
         if !text.isEmpty {
-       
-            self?.checkLabel.backgroundColor = self!.feedModel.check(word: text) ? .systemGreen : .systemRed
-            self!.feedModel.check(word: text) ? self?.alert.setAlertController(titleController: "Успешно", message: "Проверка по слову пройдена", titleAction: "ok", VC: self) :
+            guard let viewModel = self?.viewModel as? FeedModel else { return }
+            self?.checkLabel.backgroundColor = viewModel.check(word: text) ? .systemGreen : .systemRed
+            viewModel.check(word: text) ? self?.alert.setAlertController(titleController: "Успешно", message: "Проверка по слову пройдена", titleAction: "ok", VC: self) :
             self?.alert.setAlertController(titleController: "Ошибка", message: "Проверка по слову не пройдена", titleAction: "ok", VC: self)
         } else {
             
@@ -53,13 +51,24 @@ class FeedViewController: UIViewController {
         buttonPress()
         self.tabBarController?.hidesBottomBarWhenPushed = true
         configure()
+        bindViewModel()
+    }
+    
+// MARK: bind viewmodel
+    func bindViewModel() {
+        viewModel.onStateDidChange = {  state in
+           // guard let self = self else { return }
+            switch state {
+            case .initial:
+                print("bye")
+            }
+        }
     }
     
 // MARK: setup
     private func setupViews() {
         
         view.backgroundColor = .white
-     //   view.addSubview(buttonPost)
         view.addSubview(someStackView)
         someStackView.addSubview(pushPostButton1)
         someStackView.addSubview(pushPostButton2)
@@ -104,10 +113,7 @@ extension FeedViewController {
     
     @objc private func pushVC() {
         
-//        let newVC = PostViewController()
-//        navigationController?.pushViewController(newVC, animated: true)
-        feedModel1.push()
-     //   newVC.title = post.title
+        viewModel.updateState(viewInput: .postButtonDidTap)
         self.tabBarController?.hidesBottomBarWhenPushed = true
     }
 }

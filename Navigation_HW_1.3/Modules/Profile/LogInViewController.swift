@@ -163,7 +163,7 @@ extension LogInViewController {
         
         guard let delegate = viewModel?.checkDelegate else {return}
         if delegate.check(login: loginText, password: passText) {
-            viewModel?.pushProfileVC()
+            viewModel?.updateState(viewInput: .loginButtonDidTap)
         } else {
             let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
             let actrion = UIAlertAction(title: "Ok", style: .default) { _ in

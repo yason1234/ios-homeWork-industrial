@@ -25,7 +25,7 @@ final class AppFactory {
     func makeModule(ofType moduleType: Module.ModuleType) -> Module {
         switch moduleType {
         case .feed:
-            let viewModel = FeedModel1()
+            let viewModel = FeedModel()
             let view = UINavigationController(rootViewController: FeedViewController(viewModel: viewModel))
             return Module(moduleType: moduleType, viewModel: viewModel, view: view)
         case .profile:

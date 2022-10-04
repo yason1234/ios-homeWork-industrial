@@ -26,7 +26,7 @@ final class FeedCoordinator: ModuleCoordinatable {
         let viewController = module.view
         viewController.tabBarItem = moduleType.tabBarItem
         self.module = module
-        (module.viewModel as? FeedModel1)?.coordinator = self
+        (module.viewModel as? FeedModel)?.coordinator = self
         return viewController
     }
     
