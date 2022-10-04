@@ -15,11 +15,11 @@ class LogInViewController: UIViewController {
     private lazy var loginTextField = UITextField()
     private lazy var passwordTexfField = UITextField()
     private lazy var loginButton = UIButton(configuration: UIButton.Configuration.filled(), primaryAction: nil)
-    weak var coordinator: ProfileCoordinator?
+    weak var coordinator: LoginCoordinator?
     
-    private let viewModel: ProfileModelProtocol?
+    private let viewModel: LoginModelProtocol?
         
-    init(viewModel: ProfileModelProtocol) {
+    init(viewModel: LoginModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -163,7 +163,7 @@ extension LogInViewController {
         
         guard let delegate = viewModel?.checkDelegate else {return}
         if delegate.check(login: loginText, password: passText) {
-            viewModel?.push()
+            viewModel?.pushProfileVC()
         } else {
             let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
             let actrion = UIAlertAction(title: "Ok", style: .default) { _ in

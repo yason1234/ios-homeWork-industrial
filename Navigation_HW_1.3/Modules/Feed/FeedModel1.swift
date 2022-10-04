@@ -16,7 +16,6 @@ final class FeedModel1: FeedModelProtocol {
     weak var coordinator: FeedCoordinator?
     
     func push() {
-        
         coordinator?.pushProfileViewController()
     }
 }

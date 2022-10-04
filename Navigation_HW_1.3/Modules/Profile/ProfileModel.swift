@@ -2,40 +2,20 @@
 //  ProfileModel.swift
 //  Navigation_HW_1.3
 //
-//  Created by Dima Shikhalev on 02.10.2022.
+//  Created by Dima Shikhalev on 03.10.2022.
 //
 
-import Foundation
-
-protocol LoginViewControllerDelegate {
-    
-    func check(login: String, password: String) -> Bool
-}
+import UIKit
 
 protocol ProfileModelProtocol: ViewModelProtocol {
-    var checkDelegate: LoginViewControllerDelegate? { get set }
-    func push()
+    func pushToNewVC(image: [String])
 }
 
-final class ProfileViewModel: ProfileModelProtocol, LoginFactory {
-    
-    init() {
-        setDelegate()
-    }
-    
+final class ProfileViewModel: ProfileModelProtocol {
+   
     weak var coordinator: ProfileCoordinator?
-    var checkDelegate: LoginViewControllerDelegate?
     
-    func makeLoginInspector() -> LoginInspector {
-        LoginInspector()
-    }
-    
-    func push() {
-        coordinator?.pushProfileViewController()
-    }
-    
-    private func setDelegate() {
-        
-        self.checkDelegate = makeLoginInspector()
+    func pushToNewVC(image: [String]) {
+        coordinator?.pushToVC(image: image)
     }
 }

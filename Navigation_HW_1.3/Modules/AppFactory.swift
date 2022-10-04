@@ -29,7 +29,7 @@ final class AppFactory {
             let view = UINavigationController(rootViewController: FeedViewController(viewModel: viewModel))
             return Module(moduleType: moduleType, viewModel: viewModel, view: view)
         case .profile:
-            let viewModel = ProfileViewModel()
+            let viewModel = LoginViewModel()
             let view = UINavigationController(rootViewController: LogInViewController(viewModel: viewModel))
             return Module(moduleType: moduleType, viewModel: viewModel, view: view)
         }

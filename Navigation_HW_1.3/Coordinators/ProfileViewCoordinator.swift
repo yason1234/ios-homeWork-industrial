@@ -1,15 +1,15 @@
 //
-//  ProfileCoordinator.swift
+//  ProfileViewCoordinator.swift
 //  Navigation_HW_1.3
 //
-//  Created by Dima Shikhalev on 02.10.2022.
+//  Created by Dima Shikhalev on 03.10.2022.
 //
 
 import UIKit
 
 final class ProfileCoordinator: ModuleCoordinatable {
     
-    let moduleType: Module.ModuleType
+    var moduleType: Module.ModuleType
     
     private let factory: AppFactory
     
@@ -21,22 +21,18 @@ final class ProfileCoordinator: ModuleCoordinatable {
     private(set) var childCoordinators: [Coordinatable] = []
     private(set) var module: Module?
     
-    func makeLoginInspector() -> LoginInspector {
-        LoginInspector()
-    }
-    
     func start() -> UIViewController {
         let module = factory.makeModule(ofType: moduleType)
-        let viewController = module.view
-        viewController.tabBarItem = moduleType.tabBarItem
-        (module.viewModel as? ProfileViewModel)?.coordinator = self
+        let view = module.view
         self.module = module
-        return viewController
+        (module.viewModel as? ProfileViewModel)?.coordinator = self
+        return view
     }
     
-    func pushProfileViewController() {
-        let newVC = ProfileViewController()
-        newVC.setUser(user: Checker.shared.user)
+    func pushToVC(image: [String]) {
+        
+        let newVC = PhotosViewController()
+        newVC.photoArray = image
         (module?.view as? UINavigationController)?.pushViewController(newVC, animated: true)
     }
 }

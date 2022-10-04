@@ -15,8 +15,18 @@ class ProfileViewController: UIViewController {
     private lazy var image = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "wwdc"]
     private lazy var avatarView = AvatarView()
     private var user: User?
-
-
+    
+    private let viewModel: LoginViewModel
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel  = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -120,9 +130,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
-            let newVC = PhotosViewController()
-            newVC.photoArray = image
-            navigationController?.pushViewController(newVC, animated: true)
+//            let newVC = PhotosViewController()
+//            newVC.photoArray = image
+//            navigationController?.pushViewController(newVC, animated: true)
+            viewModel.pushPhotosVC(image: image)
         }
     }
 }
