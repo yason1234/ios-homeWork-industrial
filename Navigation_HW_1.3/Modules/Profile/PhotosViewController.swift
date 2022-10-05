@@ -54,6 +54,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     private func configureImages() {
         let imageProcessor = ImageProcessor()
+        let start = DispatchTime.now()
         imageProcessor.processImagesOnThread(sourceImages: arrayForFacade, filter: .colorInvert, qos: .utility) { [weak self] imageCG in
             DispatchQueue.main.async {
                 self?.imageArray = imageCG.map({ imageCG in
@@ -61,16 +62,19 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
                 })
                 self?.photosCollectionView.reloadData()
             }
+            let end = DispatchTime.now()
+            let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+            print(nanoTime)
         }
     }
     
     private func CheckTimeProcessor() {
         setupArray()
-        let start = DispatchTime.now()
+//        let start = DispatchTime.now()
         configureImages()
-        let end = DispatchTime.now()
-        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
-        print(nanoTime)
+//        let end = DispatchTime.now()
+//        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+//        print(nanoTime)
     }
     
     private func configure() {
