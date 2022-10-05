@@ -25,13 +25,13 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         configure()
         setConstraints()
         setupArray()
-        imageFacade.subscribe(self)
+       // imageFacade.subscribe(self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = true
-        imageFacade.removeSubscription(for: self)
+        //imageFacade.removeSubscription(for: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,12 +44,21 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         view.addSubview(photosCollectionView)
     }
     
-    private func setupArray() {
+     func setupArray() {
         
         photoArray.forEach { photo in
             self.arrayForFacade.append(UIImage(named: photo)!)
         }
-        imageFacade.addImagesWithTimer(time: 1, repeat: 21, userImages: arrayForFacade)
+        //imageFacade.addImagesWithTimer(time: 1, repeat: 21, userImages: arrayForFacade)
+        let imageProcessor = ImageProcessor()
+        imageProcessor.processImagesOnThread(sourceImages: arrayForFacade, filter: .colorInvert, qos: .default) { [weak self] imageCG in
+            self?.imageArray = imageCG.map({ imageCG in
+                UIImage(cgImage: imageCG!)
+            })
+            DispatchQueue.main.async {
+                self?.photosCollectionView.reloadData()
+            }
+        }
     }
     
     private func configure() {
@@ -74,6 +83,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         imageArray.count
+//        arrayForFacade.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -81,6 +91,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotosCollectionViewCell else {return UICollectionViewCell()}
        // cell.setImage(name: photoArray[indexPath.row])
         cell.setImage(image: imageArray[indexPath.row])
+//        cell.setImage(image: arrayForFacade[indexPath.row])
         cell.contentView.layer.cornerRadius = 15
         cell.contentView.layer.masksToBounds = true
         cell.contentView.clipsToBounds = true
