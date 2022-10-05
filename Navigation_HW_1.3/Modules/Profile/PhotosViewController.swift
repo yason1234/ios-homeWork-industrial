@@ -54,11 +54,11 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     private func configureImages() {
         let imageProcessor = ImageProcessor()
-        imageProcessor.processImagesOnThread(sourceImages: arrayForFacade, filter: .colorInvert, qos: .default) { [weak self] imageCG in
-            self?.imageArray = imageCG.map({ imageCG in
-                UIImage(cgImage: imageCG!)
-            })
+        imageProcessor.processImagesOnThread(sourceImages: arrayForFacade, filter: .colorInvert, qos: .utility) { [weak self] imageCG in
             DispatchQueue.main.async {
+                self?.imageArray = imageCG.map({ imageCG in
+                    UIImage(cgImage: imageCG!)
+                })
                 self?.photosCollectionView.reloadData()
             }
         }
