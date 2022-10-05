@@ -24,7 +24,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         setupViews()
         configure()
         setConstraints()
-        setupArray()
+        CheckTimeProcessor()
        // imageFacade.subscribe(self)
     }
     
@@ -44,12 +44,15 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         view.addSubview(photosCollectionView)
     }
     
-     func setupArray() {
+    private func setupArray() {
         
         photoArray.forEach { photo in
             self.arrayForFacade.append(UIImage(named: photo)!)
         }
         //imageFacade.addImagesWithTimer(time: 1, repeat: 21, userImages: arrayForFacade)
+    }
+    
+    private func configureImages() {
         let imageProcessor = ImageProcessor()
         imageProcessor.processImagesOnThread(sourceImages: arrayForFacade, filter: .colorInvert, qos: .default) { [weak self] imageCG in
             self?.imageArray = imageCG.map({ imageCG in
@@ -59,6 +62,15 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
                 self?.photosCollectionView.reloadData()
             }
         }
+    }
+    
+    private func CheckTimeProcessor() {
+        setupArray()
+        let start = DispatchTime.now()
+        configureImages()
+        let end = DispatchTime.now()
+        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+        print(nanoTime)
     }
     
     private func configure() {
