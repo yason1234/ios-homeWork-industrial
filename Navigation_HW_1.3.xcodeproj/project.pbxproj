@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3737031128F15084008DB0C1 /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3737031028F15084008DB0C1 /* BruteForce.swift */; };
 		37625E8728D979500016FA3F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625E8628D979500016FA3F /* User.swift */; };
 		37625E8928D97B6D0016FA3F /* listOfUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625E8828D97B6D0016FA3F /* listOfUsers.swift */; };
 		37625E8B28DC1EAB0016FA3F /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625E8A28DC1EAB0016FA3F /* Checker.swift */; };
@@ -72,6 +73,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3737031028F15084008DB0C1 /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
 		37625E8628D979500016FA3F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		37625E8828D97B6D0016FA3F /* listOfUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listOfUsers.swift; sourceTree = "<group>"; };
 		37625E8A28DC1EAB0016FA3F /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				37625E8828D97B6D0016FA3F /* listOfUsers.swift */,
 				37625E8A28DC1EAB0016FA3F /* Checker.swift */,
 				37A55DB328E9EC72009AF284 /* Alert.swift */,
+				3737031028F15084008DB0C1 /* BruteForce.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				37E49FBC28A114FB00D5789F /* AvatarView.swift in Sources */,
 				37DEB20D289AAAA800D50CF6 /* PhotosTableViewCell.swift in Sources */,
 				377B6B762878A0530008586B /* Post.swift in Sources */,
+				3737031128F15084008DB0C1 /* BruteForce.swift in Sources */,
 				37625E8B28DC1EAB0016FA3F /* Checker.swift in Sources */,
 				377B6B5C287896010008586B /* SceneDelegate.swift in Sources */,
 				37625E8728D979500016FA3F /* User.swift in Sources */,
