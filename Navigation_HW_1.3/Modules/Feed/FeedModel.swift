@@ -35,7 +35,7 @@ final class FeedModel: FeedModelProtocol {
         }
     }
     
-    private let secretWord: String = "neto"
+    private let secretWord: String = "net"
     
     func check(word: String) -> Bool {
         return secretWord == word ? true : false

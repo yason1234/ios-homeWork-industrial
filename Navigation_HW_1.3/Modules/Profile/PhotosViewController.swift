@@ -16,6 +16,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     private lazy var arrayForFacade = [UIImage]()
     lazy var imageArray = [UIImage]()
     private lazy var imageFacade = ImagePublisherFacade()
+    private var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,17 +56,35 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     private func configureImages() {
         let imageProcessor = ImageProcessor()
         let start = DispatchTime.now()
-        imageProcessor.processImagesOnThread(sourceImages: arrayForFacade, filter: .colorInvert, qos: .utility) { [weak self] imageCG in
-            DispatchQueue.main.async {
-                self?.imageArray = imageCG.map({ imageCG in
-                    UIImage(cgImage: imageCG!)
-                })
-                self?.photosCollectionView.reloadData()
+        imageProcessor.processImagesOnThread(sourceImages: arrayForFacade, filter: .chrome, qos: .utility) { [weak self] imageCG in
+            var count = 0
+            DispatchQueue.main.async { [weak self] in
+                self?.timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { timer in
+                    
+                    self?.imageArray.append(UIImage(cgImage: imageCG[count]!))
+                    self?.photosCollectionView.reloadData()
+                    
+                    count += 1
+                    
+                    if count == imageCG.count {
+                        timer.invalidate()
+                    }
+                }
             }
+//            DispatchQueue.main.async {
+//                self?.imageArray = imageCG.map({ imageCG in
+//                    UIImage(cgImage: imageCG!)
+//                })
+//                self?.photosCollectionView.reloadData()
+//            }
             let end = DispatchTime.now()
             let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
             print(nanoTime)
         }
+    }
+    
+    @objc private func add() {
+        
     }
     
     private func CheckTimeProcessor() {

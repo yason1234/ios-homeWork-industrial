@@ -155,6 +155,7 @@
 		377B6B58287896010008586B /* Navigation_HW_1.3 */ = {
 			isa = PBXGroup;
 			children = (
+				377B6B772878A0F70008586B /* UIElement */,
 				37A55DB528E9F847009AF284 /* Coordinators */,
 				377B6B742878A03F0008586B /* Models */,
 				37A55DBA28E9FAE3009AF284 /* Modules */,
@@ -222,7 +223,6 @@
 			isa = PBXGroup;
 			children = (
 				37A5F65D287DFA5100317703 /* Profile */,
-				377B6B772878A0F70008586B /* UIElement */,
 				377B6B7128789ABF0008586B /* Feed */,
 				37A55DBB28E9FB43009AF284 /* Modules.swift */,
 				37625E8C28DC20C30016FA3F /* AppFactory.swift */,
