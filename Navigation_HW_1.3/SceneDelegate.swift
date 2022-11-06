@@ -20,6 +20,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(windowScene: windowScene)
         self.coordinator = appCoordinator
+        
+        let first = AppConfiguration.first(url: "https://swapi.dev/api/people/8")
+        let second = AppConfiguration.second(url: "https://swapi.dev/api/starships/3")
+        let third = AppConfiguration.third(url: "https://swapi.dev/api/planets/5")
+        
+        NetworkService.request(appConfiguration: first)
+        NetworkService.request(appConfiguration: second)
+        NetworkService.request(appConfiguration: third)
 
         window?.rootViewController = coordinator?.start()
         window?.makeKeyAndVisible()

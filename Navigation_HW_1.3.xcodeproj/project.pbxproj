@@ -46,6 +46,7 @@
 		37DEB215289BD8CD00D50CF6 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB214289BD8CD00D50CF6 /* PhotosViewController.swift */; };
 		37DEB217289E741700D50CF6 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB216289E741700D50CF6 /* PhotosCollectionViewCell.swift */; };
 		37E49FBC28A114FB00D5789F /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E49FBB28A114FB00D5789F /* AvatarView.swift */; };
+		37F86802291798A600CEEECA /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F86801291798A600CEEECA /* NetworkService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		37DEB214289BD8CD00D50CF6 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		37DEB216289E741700D50CF6 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		37E49FBB28A114FB00D5789F /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		37F86801291798A600CEEECA /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				377B6B742878A03F0008586B /* Models */,
 				37A55DBA28E9FAE3009AF284 /* Modules */,
 				37A55DC128EA02ED009AF284 /* AppTabBar */,
+				37F868002917987200CEEECA /* NetworkService */,
 				377B6B59287896010008586B /* AppDelegate.swift */,
 				377B6B5B287896010008586B /* SceneDelegate.swift */,
 				377B6B62287896020008586B /* Assets.xcassets */,
@@ -257,6 +260,14 @@
 				37D5020C28D18F2400EF5622 /* NewPost.swift */,
 			);
 			path = StorageService;
+			sourceTree = "<group>";
+		};
+		37F868002917987200CEEECA /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				37F86801291798A600CEEECA /* NetworkService.swift */,
+			);
+			path = NetworkService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,6 +411,7 @@
 				37E49FBC28A114FB00D5789F /* AvatarView.swift in Sources */,
 				37DEB20D289AAAA800D50CF6 /* PhotosTableViewCell.swift in Sources */,
 				377B6B762878A0530008586B /* Post.swift in Sources */,
+				37F86802291798A600CEEECA /* NetworkService.swift in Sources */,
 				3737031128F15084008DB0C1 /* BruteForce.swift in Sources */,
 				37625E8B28DC1EAB0016FA3F /* Checker.swift in Sources */,
 				377B6B5C287896010008586B /* SceneDelegate.swift in Sources */,
