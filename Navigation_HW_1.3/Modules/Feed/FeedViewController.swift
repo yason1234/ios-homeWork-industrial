@@ -23,6 +23,7 @@ class FeedViewController: UIViewController {
     private var alert: AlertProtocol = Alert()
     
     private let viewModel: FeedModelProtocol
+    private lazy var JSONLabel = UILabel()
     
     init(viewModel: FeedModelProtocol) {
         self.viewModel = viewModel
@@ -63,14 +64,19 @@ class FeedViewController: UIViewController {
     
 // MARK: bind viewmodel
     func bindViewModel() {
+        viewModel.updateState(viewInput: .initial)
         viewModel.onStateDidChange = { [weak self] state in
             guard let self = self else { return }
             switch state {
-            case .initial:
-                print("bye")
+            case .initial(let title):
+                // вот здесь никак не хочет отрабатывать данный код, чтобы сразу был title отображен
+                DispatchQueue.main.async {
+                    guard let title else { return }
+                    self.JSONLabel.text = title
+                }
             case .loading:
                 self.activity.startAnimating()
-            case .loaded(password: let password):
+            case .loaded(let password):
                 DispatchQueue.main.async {
                     self.activity.stopAnimating()
                     self.checkTextField.text = password
@@ -91,6 +97,7 @@ class FeedViewController: UIViewController {
         view.addSubview(checkLabel)
         view.addSubview(bruteButton)
         view.addSubview(activity)
+        view.addSubview(JSONLabel)
     }
     
     private func configure() {
@@ -126,6 +133,9 @@ class FeedViewController: UIViewController {
         
         activity.translatesAutoresizingMaskIntoConstraints = false
         activity.color = .systemBlue
+        
+        JSONLabel.translatesAutoresizingMaskIntoConstraints = false
+        JSONLabel.textColor = .black
     }
 }
 
@@ -190,6 +200,9 @@ extension FeedViewController {
             activity.centerYAnchor.constraint(equalTo: bruteButton.centerYAnchor),
             activity.widthAnchor.constraint(equalToConstant: 30),
             activity.heightAnchor.constraint(equalToConstant: 30),
+            
+            JSONLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            JSONLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100)
         ])
     }
 }

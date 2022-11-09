@@ -10,17 +10,19 @@ import Foundation
 protocol FeedModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((FeedModel.State) -> Void)? {get set}
     func updateState(viewInput: FeedModel.ViewInput)
+    func loadJson(completion: ((String?) -> Void)?)
 }
 
 final class FeedModel: FeedModelProtocol {
     
     enum State {
-        case initial
+        case initial(String?)
         case loading
         case loaded(password: String)
     }
     
     enum ViewInput {
+        case initial
         case checkButtonDidTap
         case postButtonDidTap
         case bruteButtonDidTap
@@ -28,8 +30,9 @@ final class FeedModel: FeedModelProtocol {
     weak var coordinator: FeedCoordinator?
     var onStateDidChange: ((State) -> Void)?
     var bruteForce = BruteForce()
+    let jsonModel = NetworkJson()
     
-    private(set) var state: State = .initial {
+    private(set) var state: State = .initial(nil) {
         didSet {
             onStateDidChange?(state)
         }
@@ -43,12 +46,15 @@ final class FeedModel: FeedModelProtocol {
     
     func updateState(viewInput: ViewInput) {
         switch viewInput {
+        case .initial:
+            loadJson { [weak self] title in
+                self?.state = .initial(title)
+            }
         case .checkButtonDidTap:
             print("hi")
         case .postButtonDidTap:
             coordinator?.pushProfileViewController()
         case .bruteButtonDidTap:
-            state = .loading
             DispatchQueue.global().async { [weak self] in
                 self?.bruteForce(passwordToUnlock: self!.secretWord)
             }
@@ -70,5 +76,12 @@ final class FeedModel: FeedModelProtocol {
         }
         state = .loaded(password: password)
         print(password)
+    }
+    
+    //MARK: JSON
+    func loadJson(completion: ((String?) -> Void)? ) {
+        jsonModel.jsonRequest { title in
+            completion?(title)
+        }
     }
 }

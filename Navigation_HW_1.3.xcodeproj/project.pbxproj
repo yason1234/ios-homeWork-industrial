@@ -47,6 +47,7 @@
 		37DEB217289E741700D50CF6 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DEB216289E741700D50CF6 /* PhotosCollectionViewCell.swift */; };
 		37E49FBC28A114FB00D5789F /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E49FBB28A114FB00D5789F /* AvatarView.swift */; };
 		37F86802291798A600CEEECA /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F86801291798A600CEEECA /* NetworkService.swift */; };
+		37F86804291BE88700CEEECA /* Network JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F86803291BE88700CEEECA /* Network JSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		37DEB216289E741700D50CF6 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		37E49FBB28A114FB00D5789F /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		37F86801291798A600CEEECA /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		37F86803291BE88700CEEECA /* Network JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network JSON.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				37F86801291798A600CEEECA /* NetworkService.swift */,
+				37F86803291BE88700CEEECA /* Network JSON.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				377B6B7D2878C48A0008586B /* ButtonAlert.swift in Sources */,
 				37A55DB728E9F860009AF284 /* AppCoordinator.swift in Sources */,
 				37625E8928D97B6D0016FA3F /* listOfUsers.swift in Sources */,
+				37F86804291BE88700CEEECA /* Network JSON.swift in Sources */,
 				377B6B5A287896010008586B /* AppDelegate.swift in Sources */,
 				37A55DC528EA1E71009AF284 /* FeedModel.swift in Sources */,
 				3785A87A28966249004C31EA /* PostTableViewCell.swift in Sources */,
