@@ -23,7 +23,7 @@ class PostViewController: UIViewController {
     
     @objc private func navBarPush() {
         
-        let newVC = InfoViewController()
-        navigationController?.present(newVC, animated: true, completion: nil)
+//        let newVC = InfoViewController()
+//        navigationController?.present(newVC, animated: true, completion: nil)
     }
 }

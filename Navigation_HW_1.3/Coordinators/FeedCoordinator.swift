@@ -31,7 +31,9 @@ final class FeedCoordinator: ModuleCoordinatable {
     }
     
     func pushProfileViewController() {
-        let newVC = PostViewController()
+        guard let viewModel = (module?.viewModel as? FeedModel) else {return}
+        let newVC = InfoViewController(viewModel: viewModel)//PostViewController()
+
         (module?.view as? UINavigationController)?.pushViewController(newVC, animated: true)
     }
 }

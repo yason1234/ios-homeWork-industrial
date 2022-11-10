@@ -10,13 +10,13 @@ import Foundation
 protocol FeedModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((FeedModel.State) -> Void)? {get set}
     func updateState(viewInput: FeedModel.ViewInput)
-    func loadJson(completion: ((String?) -> Void)?)
+    func loadJson(completion: ((String?, [String]?) -> Void)?, _ type: FeedModel.TypeParse)
 }
 
 final class FeedModel: FeedModelProtocol {
     
     enum State {
-        case initial(String?)
+        case initial(String?, String?, [String]?)
         case loading
         case loaded(password: String)
     }
@@ -27,12 +27,18 @@ final class FeedModel: FeedModelProtocol {
         case postButtonDidTap
         case bruteButtonDidTap
     }
+    
+    enum TypeParse {
+        case serilization
+        case codable
+    }
     weak var coordinator: FeedCoordinator?
     var onStateDidChange: ((State) -> Void)?
     var bruteForce = BruteForce()
     let jsonModel = NetworkJson()
+    let jsonCodableModel = NetworkJSONCodable()
     
-    private(set) var state: State = .initial(nil) {
+    private(set) var state: State = .initial(nil, nil, nil) {
         didSet {
             onStateDidChange?(state)
         }
@@ -47,9 +53,12 @@ final class FeedModel: FeedModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .initial:
-            loadJson { [weak self] title in
-                self?.state = .initial(title)
-            }
+            loadJson(completion: { [weak self] title, resident in
+                self?.loadJson(completion: { [weak self] titleCodable, resident1 in
+                    print(resident1)
+                    self?.state = .initial(title, titleCodable, resident1)
+                }, .codable)
+            }, .serilization)
         case .checkButtonDidTap:
             print("hi")
         case .postButtonDidTap:
@@ -79,9 +88,16 @@ final class FeedModel: FeedModelProtocol {
     }
     
     //MARK: JSON
-    func loadJson(completion: ((String?) -> Void)? ) {
-        jsonModel.jsonRequest { title in
-            completion?(title)
+    func loadJson(completion: ((String?, [String]?) -> Void)?, _ type:  TypeParse) {
+        switch type {
+        case .serilization:
+            jsonModel.jsonRequest { title in
+                completion?(title, nil)
+            }
+        case .codable:
+            jsonCodableModel.parsingPlanet { title, residents in
+                completion?(title, residents)
+            }
         }
     }
 }
