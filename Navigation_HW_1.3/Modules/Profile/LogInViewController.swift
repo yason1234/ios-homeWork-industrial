@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LogInViewController: UIViewController {
     
@@ -18,6 +19,8 @@ class LogInViewController: UIViewController {
     weak var coordinator: LoginCoordinator?
     
     private let viewModel: LoginModelProtocol?
+    
+    private var handleAuth: NSObjectProtocol?
         
     init(viewModel: LoginModelProtocol) {
         self.viewModel = viewModel
@@ -42,6 +45,19 @@ class LogInViewController: UIViewController {
         super.viewWillAppear(animated)
         
         registerNotification()
+        handleAuth =  Auth.auth().addStateDidChangeListener({ auth, user in
+            if user != nil {
+                self.pushToVC()
+            } else {
+                self.pushToVC()
+            }
+        })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        Auth.auth().removeStateDidChangeListener(handleAuth!)
     }
     
     private func setupViews() {
@@ -106,6 +122,7 @@ class LogInViewController: UIViewController {
         loginButton.titleLabel?.textColor = .white
         loginButton.backgroundColor = .systemBlue
         loginButton.translatesAutoresizingMaskIntoConstraints = false
+        loginButton.isEnabled = false
         
         loginButton.configurationUpdateHandler = { button in
             switch button.state {
@@ -138,7 +155,28 @@ extension LogInViewController {
     
     @objc private func pushToVC() {
         
+        print("popa")
         guard let loginText = loginTextField.text, let passText = passwordTexfField.text else { return }
+        if loginText.isEmpty && passText.isEmpty {
+            //loginButton.isEnabled = false
+        } else {
+            viewModel?.checkDelegate?.checker.checkCredentials(email: loginText, password: passText, completionError: { [weak self] error in
+                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .default) { _ in
+                    self?.loginTextField.becomeFirstResponder()
+                }
+                
+                alertController.addAction(action)
+                self?.present(alertController, animated: true, completion: nil)
+                
+                self?.viewModel?.checkDelegate?.checker.signUp(email: loginText, password: passText)
+                self?.viewModel?.updateState(viewInput: .loginButtonDidTap)
+            }, completionResult: {[weak self] in
+                self?.viewModel?.updateState(viewInput: .loginButtonDidTap)
+            })
+        }
+        
+        /*
        /*
         #if DEBUG
         let userService = CurrentUserService()
@@ -172,11 +210,11 @@ extension LogInViewController {
             
             alertController.addAction(actrion)
             self.present(alertController, animated: true, completion: nil)
-        }
+        }*/
     }
 }
 
-// MARK: notificationKeyBoard
+// MARK: notificationKeyBoard and textfieldDelegate
 extension LogInViewController {
     
     private func registerNotification() {
@@ -204,6 +242,16 @@ extension LogInViewController {
     @objc private func kbWillHide() {
         
         myScrollView.setContentOffset(.zero, animated: true)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textMail = loginTextField.text, let textPass = passwordTexfField.text else { return false }
+        if textMail.isEmpty && textPass.isEmpty {
+            loginButton.isEnabled = false
+        } else {
+            loginButton.isEnabled = true
+        }
+        return true
     }
 }
 

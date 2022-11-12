@@ -9,6 +9,7 @@ import Foundation
 
 protocol LoginViewControllerDelegate {
     func check(login: String, password: String) -> Bool
+    var checker: CheckerServiceProtocol { get set }
 }
 
 protocol LoginModelProtocol: ViewModelProtocol {
