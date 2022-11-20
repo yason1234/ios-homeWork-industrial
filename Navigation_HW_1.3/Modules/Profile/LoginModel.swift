@@ -5,7 +5,8 @@
 //  Created by Dima Shikhalev on 02.10.2022.
 //
 
-import Foundation
+import UIKit
+import RealmSwift
 
 protocol LoginViewControllerDelegate {
     func check(login: String, password: String) -> Bool
@@ -27,6 +28,7 @@ final class LoginViewModel: LoginModelProtocol, LoginFactory {
     enum ViewInput {
         case loginButtonDidTap
         case arrowDidTap([String])
+        case loginButtonToAuthDidTap(String, String, UIViewController, (() -> Void)?)
     }
     
     init() {
@@ -36,6 +38,8 @@ final class LoginViewModel: LoginModelProtocol, LoginFactory {
     weak var coordinator: LoginCoordinator?
     var onStateDidChange: ((State) -> Void)?
     var checkDelegate: LoginViewControllerDelegate?
+    private let checker = RealmService()
+    
     
     private(set) var state: State = .initial {
         didSet {
@@ -58,6 +62,10 @@ final class LoginViewModel: LoginModelProtocol, LoginFactory {
             coordinator?.pushProfileViewController()
         case .arrowDidTap(let image):
             coordinator?.pushPhotosViewController(image: image)
+        case .loginButtonToAuthDidTap(let login, let password, let vc, let completion):
+            checker.checkUser(login: login, password: password, vc: vc) { [weak self] in
+                self?.coordinator?.pushProfileViewController()
+            } completionDeleteText: { completion?() }
         }
     }
 }

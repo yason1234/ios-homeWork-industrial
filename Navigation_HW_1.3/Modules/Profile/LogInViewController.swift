@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import RealmSwift
 
 class LogInViewController: UIViewController {
     
@@ -16,6 +17,7 @@ class LogInViewController: UIViewController {
     private lazy var loginTextField = UITextField()
     private lazy var passwordTexfField = UITextField()
     private lazy var loginButton = UIButton(configuration: UIButton.Configuration.filled(), primaryAction: nil)
+    private let realm = try! Realm()
     weak var coordinator: LoginCoordinator?
     
     private let viewModel: LoginModelProtocol?
@@ -155,62 +157,22 @@ extension LogInViewController {
     
     @objc private func pushToVC() {
         
-        print("popa")
         guard let loginText = loginTextField.text, let passText = passwordTexfField.text else { return }
-        if loginText.isEmpty && passText.isEmpty {
-            //loginButton.isEnabled = false
+        
+        
+        if !loginText.isEmpty && !passText.isEmpty {
+            viewModel?.updateState(viewInput: .loginButtonToAuthDidTap(loginText, passText, self, {
+                self.deleteText()
+            }))
         } else {
-            viewModel?.checkDelegate?.checker.checkCredentials(email: loginText, password: passText, completionError: { [weak self] error in
-                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                let action = UIAlertAction(title: "Ok", style: .default) { _ in
-                    self?.loginTextField.becomeFirstResponder()
-                }
-                
-                alertController.addAction(action)
-                self?.present(alertController, animated: true, completion: nil)
-                
-                self?.viewModel?.checkDelegate?.checker.signUp(email: loginText, password: passText)
-                self?.viewModel?.updateState(viewInput: .loginButtonDidTap)
-            }, completionResult: {[weak self] in
-                self?.viewModel?.updateState(viewInput: .loginButtonDidTap)
-            })
+            
         }
         
-        /*
-       /*
-        #if DEBUG
-        let userService = CurrentUserService()
-        
-        #else
-        let userService = CurrentUserService()
-        
-        #endif
-        
-        if let user = userService.check(login: loginText, password: passText) {
-            navigationController?.pushViewController(newVC, animated: true)
-            newVC.setUser(user: user)
-        } else {
-            let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
-            let actrion = UIAlertAction(title: "Ok", style: .default) { _ in
-                self.loginTextField.becomeFirstResponder()
-            }
-            
-            alertController.addAction(actrion)
-            self.present(alertController, animated: true, completion: nil)
-        }*/
-        
-        guard let delegate = viewModel?.checkDelegate else {return}
-        if delegate.check(login: loginText, password: passText) {
-            viewModel?.updateState(viewInput: .loginButtonDidTap)
-        } else {
-            let alertController = UIAlertController(title: "Ошибка", message: "неверно введен логин или пароль", preferredStyle: .alert)
-            let actrion = UIAlertAction(title: "Ok", style: .default) { _ in
-                self.loginTextField.becomeFirstResponder()
-            }
-            
-            alertController.addAction(actrion)
-            self.present(alertController, animated: true, completion: nil)
-        }*/
+    }
+    
+    private func deleteText() {
+        loginTextField.text = nil
+        passwordTexfField.text = nil
     }
 }
 
