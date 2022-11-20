@@ -16,18 +16,19 @@ final class RealmService {
         let newUser = UserModel()
         newUser.login = login
         newUser.password = password
-
+        newUser.IsLogin = true
         
         let users = realm.objects(UserModel.self)
-        
         if users.contains(where: {$0.login == login}) {
             users.contains { user in
                 if user.login == login {
                     if password == user.password {
-                        print("check is good, push")
+                        try! realm.write({
+                            user.IsLogin = true
+                            print(newUser.IsLogin)
+                        })
                         completion?()
                     } else {
-                        print("incorrect password")
                         presentAlert(vc: vc)
                         completionDeleteText?()
                     }
@@ -35,7 +36,6 @@ final class RealmService {
                 return false
             }
         } else {
-            print(newUser.login)
             try! realm.write({
                 realm.add(newUser)
             })

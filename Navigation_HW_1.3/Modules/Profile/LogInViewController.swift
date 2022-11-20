@@ -56,6 +56,16 @@ class LogInViewController: UIViewController {
         })
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let users = realm.objects(UserModel.self)
+        let user = users[0]
+        if user.IsLogin {
+            viewModel?.updateState(viewInput: .loginButtonDidTap)
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -158,7 +168,6 @@ extension LogInViewController {
     @objc private func pushToVC() {
         
         guard let loginText = loginTextField.text, let passText = passwordTexfField.text else { return }
-        
         
         if !loginText.isEmpty && !passText.isEmpty {
             viewModel?.updateState(viewInput: .loginButtonToAuthDidTap(loginText, passText, self, {
