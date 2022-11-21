@@ -60,9 +60,11 @@ class LogInViewController: UIViewController {
         super.viewDidAppear(animated)
         
         let users = realm.objects(UserModel.self)
-        let user = users[0]
-        if user.IsLogin {
-            viewModel?.updateState(viewInput: .loginButtonDidTap)
+        if !users.isEmpty {
+            let user = users[0]
+            if user.IsLogin {
+                viewModel?.updateState(viewInput: .loginButtonDidTap)
+            }
         }
     }
     
