@@ -9,7 +9,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    var post = Post(title: "Post")
+    var post = Post1(title: "Post")
     private lazy var someStackView = UIStackView()
     private lazy var pushPostButton1 = ButtonFeed()
     private lazy var pushPostButton2 = ButtonFeed()

@@ -10,6 +10,11 @@
 		371B0091292954FB00B5B275 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 371B0090292954FB00B5B275 /* RealmSwift */; };
 		371B00932929574900B5B275 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371B00922929574900B5B275 /* UserModel.swift */; };
 		371B00952929617600B5B275 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371B00942929617600B5B275 /* RealmService.swift */; };
+		371B0097292C950200B5B275 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371B0096292C950200B5B275 /* CoreDataService.swift */; };
+		371B009A292C95A700B5B275 /* PostData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 371B0098292C95A700B5B275 /* PostData.xcdatamodeld */; };
+		371B009D292D226600B5B275 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371B009C292D226600B5B275 /* PostViewModel.swift */; };
+		371B009F292D231C00B5B275 /* PostCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371B009E292D231C00B5B275 /* PostCoordinator.swift */; };
+		371B00A3292D248C00B5B275 /* SelectedPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371B00A2292D248C00B5B275 /* SelectedPostViewController.swift */; };
 		37625E8728D979500016FA3F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625E8628D979500016FA3F /* User.swift */; };
 		37625E8928D97B6D0016FA3F /* listOfUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625E8828D97B6D0016FA3F /* listOfUsers.swift */; };
 		37625E8B28DC1EAB0016FA3F /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37625E8A28DC1EAB0016FA3F /* Checker.swift */; };
@@ -21,7 +26,7 @@
 		377B6B6E28789A9A0008586B /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B6D28789A9A0008586B /* FeedViewController.swift */; };
 		377B6B7028789AB20008586B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B6F28789AB20008586B /* ProfileViewController.swift */; };
 		377B6B732878A0280008586B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B722878A0280008586B /* PostViewController.swift */; };
-		377B6B762878A0530008586B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B752878A0530008586B /* Post.swift */; };
+		377B6B762878A0530008586B /* Post1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B752878A0530008586B /* Post1.swift */; };
 		377B6B792878A1240008586B /* ButtonFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B782878A1240008586B /* ButtonFeed.swift */; };
 		377B6B7B2878C42E0008586B /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B7A2878C42E0008586B /* InfoViewController.swift */; };
 		377B6B7D2878C48A0008586B /* ButtonAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B6B7C2878C48A0008586B /* ButtonAlert.swift */; };
@@ -82,6 +87,11 @@
 /* Begin PBXFileReference section */
 		371B00922929574900B5B275 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		371B00942929617600B5B275 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
+		371B0096292C950200B5B275 /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		371B0099292C95A700B5B275 /* PostData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PostData.xcdatamodel; sourceTree = "<group>"; };
+		371B009C292D226600B5B275 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
+		371B009E292D231C00B5B275 /* PostCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCoordinator.swift; sourceTree = "<group>"; };
+		371B00A2292D248C00B5B275 /* SelectedPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPostViewController.swift; sourceTree = "<group>"; };
 		37625E8628D979500016FA3F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		37625E8828D97B6D0016FA3F /* listOfUsers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listOfUsers.swift; sourceTree = "<group>"; };
 		37625E8A28DC1EAB0016FA3F /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
@@ -95,7 +105,7 @@
 		377B6B6D28789A9A0008586B /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		377B6B6F28789AB20008586B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		377B6B722878A0280008586B /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
-		377B6B752878A0530008586B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		377B6B752878A0530008586B /* Post1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post1.swift; sourceTree = "<group>"; };
 		377B6B782878A1240008586B /* ButtonFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFeed.swift; sourceTree = "<group>"; };
 		377B6B7A2878C42E0008586B /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		377B6B7C2878C48A0008586B /* ButtonAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAlert.swift; sourceTree = "<group>"; };
@@ -147,6 +157,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		371B009B292D225000B5B275 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				371B00A2292D248C00B5B275 /* SelectedPostViewController.swift */,
+				371B009C292D226600B5B275 /* PostViewModel.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
 		377B6B4D287896010008586B = {
 			isa = PBXGroup;
 			children = (
@@ -176,6 +195,7 @@
 				37A55DC128EA02ED009AF284 /* AppTabBar */,
 				377B6B59287896010008586B /* AppDelegate.swift */,
 				377B6B5B287896010008586B /* SceneDelegate.swift */,
+				371B0098292C95A700B5B275 /* PostData.xcdatamodeld */,
 				377B6B62287896020008586B /* Assets.xcassets */,
 				377B6B64287896020008586B /* LaunchScreen.storyboard */,
 				377B6B67287896020008586B /* Info.plist */,
@@ -197,7 +217,7 @@
 		377B6B742878A03F0008586B /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				377B6B752878A0530008586B /* Post.swift */,
+				377B6B752878A0530008586B /* Post1.swift */,
 				37625E8628D979500016FA3F /* User.swift */,
 				37625E8828D97B6D0016FA3F /* listOfUsers.swift */,
 				37625E8A28DC1EAB0016FA3F /* Checker.swift */,
@@ -205,6 +225,7 @@
 				37F8684D291EFD5F00CEEECA /* CheckerService.swift */,
 				371B00922929574900B5B275 /* UserModel.swift */,
 				371B00942929617600B5B275 /* RealmService.swift */,
+				371B0096292C950200B5B275 /* CoreDataService.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -230,6 +251,7 @@
 				37A55DB628E9F860009AF284 /* AppCoordinator.swift */,
 				37A55DBD28EA002E009AF284 /* FeedCoordinator.swift */,
 				37A55DBF28EA0040009AF284 /* LoginCoordinator.swift */,
+				371B009E292D231C00B5B275 /* PostCoordinator.swift */,
 				37A55DB828E9F8C0009AF284 /* Coordinatable.swift */,
 			);
 			path = Coordinators;
@@ -238,6 +260,7 @@
 		37A55DBA28E9FAE3009AF284 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				371B009B292D225000B5B275 /* Post */,
 				37A5F65D287DFA5100317703 /* Profile */,
 				377B6B772878A0F70008586B /* UIElement */,
 				377B6B7128789ABF0008586B /* Feed */,
@@ -416,8 +439,11 @@
 				37A55DBC28E9FB43009AF284 /* Modules.swift in Sources */,
 				377B6B7D2878C48A0008586B /* ButtonAlert.swift in Sources */,
 				37A55DB728E9F860009AF284 /* AppCoordinator.swift in Sources */,
+				371B009A292C95A700B5B275 /* PostData.xcdatamodeld in Sources */,
 				37625E8928D97B6D0016FA3F /* listOfUsers.swift in Sources */,
 				377B6B5A287896010008586B /* AppDelegate.swift in Sources */,
+				371B009F292D231C00B5B275 /* PostCoordinator.swift in Sources */,
+				371B0097292C950200B5B275 /* CoreDataService.swift in Sources */,
 				37A55DC528EA1E71009AF284 /* FeedModel.swift in Sources */,
 				3785A87A28966249004C31EA /* PostTableViewCell.swift in Sources */,
 				37A55DC028EA0040009AF284 /* LoginCoordinator.swift in Sources */,
@@ -433,9 +459,10 @@
 				37DEB215289BD8CD00D50CF6 /* PhotosViewController.swift in Sources */,
 				37DEB217289E741700D50CF6 /* PhotosCollectionViewCell.swift in Sources */,
 				37E49FBC28A114FB00D5789F /* AvatarView.swift in Sources */,
+				371B009D292D226600B5B275 /* PostViewModel.swift in Sources */,
 				37DEB20D289AAAA800D50CF6 /* PhotosTableViewCell.swift in Sources */,
 				37F8684E291EFD5F00CEEECA /* CheckerService.swift in Sources */,
-				377B6B762878A0530008586B /* Post.swift in Sources */,
+				377B6B762878A0530008586B /* Post1.swift in Sources */,
 				37625E8B28DC1EAB0016FA3F /* Checker.swift in Sources */,
 				377B6B5C287896010008586B /* SceneDelegate.swift in Sources */,
 				37625E8728D979500016FA3F /* User.swift in Sources */,
@@ -445,6 +472,7 @@
 				377B6B7B2878C42E0008586B /* InfoViewController.swift in Sources */,
 				37A55DC328EA0308009AF284 /* AppTabBarCoordinator.swift in Sources */,
 				377B6B732878A0280008586B /* PostViewController.swift in Sources */,
+				371B00A3292D248C00B5B275 /* SelectedPostViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -800,6 +828,19 @@
 			productName = FirebaseDatabase;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		371B0098292C95A700B5B275 /* PostData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				371B0099292C95A700B5B275 /* PostData.xcdatamodel */,
+			);
+			currentVersion = 371B0099292C95A700B5B275 /* PostData.xcdatamodel */;
+			path = PostData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 377B6B4E287896010008586B /* Project object */;
 }

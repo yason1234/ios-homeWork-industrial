@@ -13,6 +13,7 @@ struct Module {
     enum ModuleType {
         case feed
         case profile
+        case post
     }
 
     let moduleType: ModuleType
@@ -27,6 +28,8 @@ extension Module.ModuleType {
             return UITabBarItem(title: "feed", image: UIImage(systemName: "creditcard"), tag: 0)
         case .profile:
             return UITabBarItem(title: "profile", image: UIImage(systemName: "bag"), tag: 1)
+        case .post:
+            return UITabBarItem(title: "post", image: UIImage(systemName: "plus"), tag: 2)
         }
     }
 }

@@ -34,6 +34,10 @@ final class AppFactory {
             let viewModel = LoginViewModel()
             let view = UINavigationController(rootViewController: LogInViewController(viewModel: viewModel))
             return Module(moduleType: moduleType, viewModel: viewModel, view: view)
+        case .post:
+            let viewModel = PostViewModel()
+            let view = UINavigationController(rootViewController: SelectedPostViewController(viewModel: viewModel))
+            return Module(moduleType: moduleType, viewModel: viewModel, view: view)
         }
     }
 }

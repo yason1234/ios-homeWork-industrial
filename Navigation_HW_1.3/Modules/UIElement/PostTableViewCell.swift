@@ -6,6 +6,9 @@
 //
 
 import UIKit
+protocol ProfileDelegate: AnyObject {
+    func cellDidTap()
+}
 
 class PostTableViewCell: UITableViewCell {
 
@@ -14,6 +17,8 @@ class PostTableViewCell: UITableViewCell {
     var descriptionLabel = UILabel()
     var likesLabel = UILabel()
     var viewsLabel = UILabel()
+    
+    weak var delegate: ProfileDelegate?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -74,6 +79,14 @@ class PostTableViewCell: UITableViewCell {
         viewsLabel.font = .systemFont(ofSize: 16)
         viewsLabel.textColor = .black
         viewsLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tap))
+        gesture.numberOfTapsRequired = 2
+        self.addGestureRecognizer(gesture)
+    }
+    
+    @objc private func tap() {
+        delegate?.cellDidTap()
     }
     
     private func setConstraints() {
