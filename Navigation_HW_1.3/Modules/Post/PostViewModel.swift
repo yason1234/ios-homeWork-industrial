@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 protocol PostModelProtocol: ViewModelProtocol {
     var onStateDidChange: ((PostViewModel.State) -> Void)? { get set }
@@ -19,10 +20,11 @@ final class PostViewModel: PostModelProtocol {
     }
     
     enum ViewInput {
-        case postButtonDidTap
+        case postWillDelete(IndexPath, () -> Void)
     }
     weak var coordinator: PostCoordinator?
     var onStateDidChange: ((State) -> Void)?
+    private let coreDataService = CoreDataService()
     
     private(set) var state: State = .initial {
         didSet {
@@ -32,8 +34,10 @@ final class PostViewModel: PostModelProtocol {
     
     func updateState(viewInput: ViewInput) {
         switch viewInput {
-        case .postButtonDidTap:
-            print("hi")
+        case .postWillDelete(let indexPath, let completion):
+            coreDataService.deletePost(atIndexPath: indexPath) {
+                completion()
+            }
         }
     }
 }

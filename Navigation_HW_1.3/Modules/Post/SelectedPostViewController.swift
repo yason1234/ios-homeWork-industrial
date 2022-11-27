@@ -11,9 +11,14 @@ class SelectedPostViewController: UITableViewController {
 
     private let viewModel: PostModelProtocol
     private var posts: [Post] {
-        coreDataService.posts
+        get {
+            coreDataService.posts
+        } set {
+            coreDataService.posts = newValue
+        }
     }
-    private let coreDataService = CoreDataService.shared
+    private let coreDataService = CoreDataService()
+    private let searchController = UISearchController(searchResultsController: nil)
     
     init(viewModel: PostModelProtocol) {
         self.viewModel = viewModel
@@ -28,17 +33,20 @@ class SelectedPostViewController: UITableViewController {
         super.viewDidLoad()
 
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "cell")
+        setupSearchViewController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        coreDataService.loadPosts()
-//        for i in posts {
-//            coreDataService.persistantContainer.viewContext.delete(i)
-//            coreDataService.saveContext()
-//            coreDataService.loadPosts()
-//        }
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.coreDataService.loadPosts()
+//            for i in self.posts {
+//                self.coreDataService.persistantContainer.viewContext.delete(i)
+//                self.coreDataService.saveContext()
+//                self.coreDataService.loadPosts()
+//            }
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
@@ -54,61 +62,54 @@ class SelectedPostViewController: UITableViewController {
             return UITableViewCell()
         }
 
-        cell.author.text = posts[indexPath.row].title
+        cell.author.text = posts[indexPath.row].author
         cell.descriptionLabel.text = posts[indexPath.row].text
         if let dataImage = posts[indexPath.row].image {
-            cell.avatarImageView.image = UIImage(data: dataImage)
+            cell.avatarImageView.image = UIImage(named: dataImage)
         }
         cell.likesLabel.text = posts[indexPath.row].likes
         cell.viewsLabel.text = posts[indexPath.row].views
 
         return cell
     }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            viewModel.updateState(viewInput: .postWillDelete(indexPath, { [weak self] in
+                DispatchQueue.main.async {
+                    self?.coreDataService.loadPosts()
+                    self?.tableView.deleteRows(at: [indexPath], with: .left)
+                    //self?.tableView.reloadData()
+                }
+            }))
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    */
+}
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+extension SelectedPostViewController: UISearchResultsUpdating, UISearchBarDelegate {
+    
+    private func setupSearchViewController() {
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        coreDataService.loadPosts(searchText: searchText, context: nil)
+        tableView.reloadData()
     }
-    */
-
+    
+    // лишнее
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        coreDataService.loadPosts()
+//        tableView.reloadData()
+//    }
 }
