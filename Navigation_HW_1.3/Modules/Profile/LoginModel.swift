@@ -8,6 +8,7 @@
 import UIKit
 import RealmSwift
 import CoreData
+import StorageService
 
 protocol LoginViewControllerDelegate {
     func check(login: String, password: String) -> Bool
@@ -30,7 +31,7 @@ final class LoginViewModel: LoginModelProtocol, LoginFactory {
         case loginButtonDidTap
         case arrowDidTap([String])
         case loginButtonToAuthDidTap(String, String, UIViewController, (() -> Void)?)
-        case postDidTap(PostTableViewCell)
+        case postHaveTapped(NewPost)
     }
     
     init() {
@@ -41,7 +42,7 @@ final class LoginViewModel: LoginModelProtocol, LoginFactory {
     var onStateDidChange: ((State) -> Void)?
     var checkDelegate: LoginViewControllerDelegate?
     private let checker = RealmService()
-    private let coreDataService = CoreDataService.shared
+    private let coreDataService = CoreDataService()
     
     
     private(set) var state: State = .initial {
@@ -69,8 +70,8 @@ final class LoginViewModel: LoginModelProtocol, LoginFactory {
             checker.checkUser(login: login, password: password, vc: vc) { [weak self] in
                 self?.coordinator?.pushProfileViewController()
             } completionDeleteText: { completion?() }
-        case .postDidTap(let cell):
-            coreDataService.createPost(cell: cell)
+        case .postHaveTapped(let post):
+            coreDataService.createPost(post: post)
         }
     }
 }

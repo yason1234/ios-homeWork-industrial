@@ -15,7 +15,6 @@ class ProfileViewController: UIViewController, ProfileDelegate {
     private lazy var image = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "wwdc"]
     private lazy var avatarView = AvatarView()
     private var user: User?
-    var postCell: PostTableViewCell?
     
     private let viewModel: LoginViewModel
     
@@ -135,21 +134,15 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         } else {
         
             guard let cell = tableView.cellForRow(at: indexPath) as? PostTableViewCell else {return}
-            postCell = cell
-            postCell?.delegate = self
+            cell.delegate = self
 
-            tableView.deselectRow(at: indexPath, animated: true)
         }
-    }
-    private func cellDidTap(completion: (PostTableViewCell) -> Void) {
-        guard let cell = postCell else {return}
-        completion(cell)
     }
     
     func cellDidTap() {
-        cellDidTap { cell in
-            viewModel.updateState(viewInput: .postDidTap(cell))
-        }
+        let post = model[myTableView.indexPathForSelectedRow!.row]
+        viewModel.updateState(viewInput: .postHaveTapped(post))
+        myTableView.deselectRow(at: myTableView.indexPathForSelectedRow!, animated: true)
     }
 }
 

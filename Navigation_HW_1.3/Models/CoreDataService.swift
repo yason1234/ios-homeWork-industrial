@@ -7,10 +7,10 @@
 
 import UIKit
 import CoreData
+import StorageService
 
 final class CoreDataService {
     
-    static let shared = CoreDataService()
     
     // MARK: CoreData stack
     
@@ -40,41 +40,71 @@ final class CoreDataService {
     
     var posts = [Post]()
     
-    func loadPosts() {
+    func loadPosts(searchText: String? = nil ,context: NSManagedObjectContext? = nil) {
         let request = Post.fetchRequest()
+        if let searchText, !searchText.isEmpty {
+            request.predicate = NSPredicate(format: "author contains[c] %@", searchText)
+        }
         do {
-            posts = try persistantContainer.viewContext.fetch(request)
+            if let context {
+                posts = try context.fetch(request)
+            } else {
+                posts = try persistantContainer.viewContext.fetch(request)
+            }
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
     
-    func createPost(cell: PostTableViewCell) {
-
-        if !posts.isEmpty {
-            if !posts.contains(where: {$0.title == cell.author.text}) {
-                let newPosts = Post(context: persistantContainer.viewContext)
-                newPosts.text = cell.descriptionLabel.text
-                newPosts.title = cell.author.text
-                guard let image = cell.avatarImageView.image?.pngData() else {return}
-                newPosts.image = image
-                newPosts.likes = cell.likesLabel.text
-                newPosts.views = cell.viewsLabel.text
-                saveContext()
-                loadPosts()
-            } else {
-                print("Post have been created")
+    func createPost(post: NewPost) {
+        
+        persistantContainer.performBackgroundTask { backContext in
+            if self.findPosts(byAuthor: post.author, context: backContext) == nil {
+                
+                let newPosts = Post(context: backContext)
+                newPosts.text = post.description
+                newPosts.author = post.author
+                newPosts.image = post.image
+                newPosts.likes = "\(post.likes)"
+                newPosts.views = "\(post.views)"
+                
+                do {
+                    try backContext.save()
+                } catch {
+                    print(error)
+                }
             }
-        } else {
-            let newPosts = Post(context: persistantContainer.viewContext)
-            newPosts.text = cell.descriptionLabel.text
-            newPosts.title = cell.author.text
-            guard let image = cell.avatarImageView.image?.pngData() else {return}
-            newPosts.image = image
-            newPosts.likes = cell.likesLabel.text
-            newPosts.views = cell.viewsLabel.text
-            saveContext()
-            loadPosts()
         }
+    }
+    
+    func deletePost(atIndexPath indexPath: IndexPath, completion: @escaping () -> Void) {
+        // MARK:  Ошибка - "An NSManagedObjectContext cannot delete objects in other contexts.".
+        // как удалить в бэке?
+       /*
+        persistantContainer.performBackgroundTask { backContext in
+            self.loadPosts(context: backContext)
+            backContext.delete(self.posts[indexPath.row])
+            
+            do {
+               try backContext.save()
+            } catch {
+                print(error)
+            }
+            completion()
+        }
+        */
+        
+        loadPosts()
+        persistantContainer.viewContext.delete(posts[indexPath.row])
+        saveContext()
+        completion()
+    }
+    
+    private func findPosts(byAuthor author: String? = nil, context: NSManagedObjectContext) -> Post? {
+        let fetchRequest = Post.fetchRequest()
+        if let author {
+            fetchRequest.predicate = NSPredicate(format: "author == %@", author)
+        }
+        return (try? context.fetch(fetchRequest))?.first
     }
 }
