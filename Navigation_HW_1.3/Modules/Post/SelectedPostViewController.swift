@@ -7,23 +7,18 @@
 
 import UIKit
 import CoreData
+import StorageService
 
 class SelectedPostViewController: UITableViewController {
 
     private let viewModel: PostModelProtocol
-    private var posts: [Post] {
-        get {
-            coreDataService.posts
-        } set {
-            coreDataService.posts = newValue
-        }
-    }
-    private let coreDataService = CoreDataService()
+
     private let searchController = UISearchController(searchResultsController: nil)
     private lazy var fetchController: NSFetchedResultsController = {
         let fetchRequest = Post.fetchRequest()
-        fetchRequest.sortDescriptors = []
-        let fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataService.persistantContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "text", ascending: true)]
+        let fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.shared.persistantContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchResultController.delegate = self
         return fetchResultController
     }()
     
@@ -41,28 +36,29 @@ class SelectedPostViewController: UITableViewController {
 
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "cell")
         setupSearchViewController()
-        try! fetchController.performFetch()
+        do {
+            try fetchController.performFetch()
+        } catch {
+            print(error)
+        }
         fetchController.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        DispatchQueue.main.async {
-//            self.coreDataService.loadPosts()
-//            self.tableView.reloadData()
-//        }
+
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return fetchController.sections?.count ?? 0
+        return fetchController.sections?.count ?? 5
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return fetchController.sections?[section].numberOfObjects ?? 0//posts.count
+        return fetchController.sections?[section].numberOfObjects ?? 5//posts.count
     }
 
     
@@ -70,15 +66,7 @@ class SelectedPostViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? PostTableViewCell else {
             return UITableViewCell()
         }
-        /*
-        cell.author.text = posts[indexPath.row].author
-        cell.descriptionLabel.text = posts[indexPath.row].text
-        if let dataImage = posts[indexPath.row].image {
-            cell.avatarImageView.image = UIImage(named: dataImage)
-        }
-        cell.likesLabel.text = posts[indexPath.row].likes
-        cell.viewsLabel.text = posts[indexPath.row].views
-*/
+        
         let post = fetchController.object(at: indexPath)
         cell.author.text = post.author
         cell.descriptionLabel.text = post.text
@@ -91,13 +79,7 @@ class SelectedPostViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.updateState(viewInput: .postWillDelete(indexPath, { [weak self] in
-                DispatchQueue.main.async {
-                    self?.coreDataService.loadPosts()
-                    //self?.tableView.deleteRows(at: [indexPath], with: .left)
-                    //self?.tableView.reloadData()
-                }
-            }))
+            viewModel.updateState(viewInput: .postWillDelete(indexPath))
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -125,20 +107,30 @@ extension SelectedPostViewController: UISearchResultsUpdating, UISearchBarDelega
 
 extension SelectedPostViewController: NSFetchedResultsControllerDelegate {
     
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.beginUpdates()
+        print("start")
+    }
+    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-       
+        
+        switch type {
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .automatic)
+        case .insert:
+            tableView.insertRows(at: [newIndexPath!], with: .bottom)
+        case .move:
+            tableView.moveRow(at: indexPath!, to: newIndexPath!)
+        case .update:
+            tableView.reloadRows(at: [indexPath!], with: .fade)
+        @unknown default:
+            fatalError()
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        tableView.endUpdates()
         tableView.reloadData()
-//        switch type {
-//        case .insert:
-//            tableView.insertRows(at: [newIndexPath!], with: .automatic)
-//        case .delete:
-//            tableView.deleteRows(at: [indexPath!], with: .automatic)
-//        case .move:
-//            tableView.moveRow(at: indexPath!, to: newIndexPath!)
-//        case .update:
-//            tableView.reloadRows(at: [indexPath!], with: .automatic)
-//        @unknown default:
-//            tableView.reloadData()
-//        }
+        print("end")
     }
 }
