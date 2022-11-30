@@ -11,7 +11,7 @@ import StorageService
 
 final class CoreDataService {
     
-    
+    static let shared = CoreDataService()
     // MARK: CoreData stack
     
     lazy var persistantContainer: NSPersistentContainer = {
@@ -21,6 +21,7 @@ final class CoreDataService {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         }
+        container.viewContext.automaticallyMergesChangesFromParent = true
         return container
     }()
     
@@ -77,7 +78,7 @@ final class CoreDataService {
         }
     }
     
-    func deletePost(atIndexPath indexPath: IndexPath, completion: @escaping () -> Void) {
+    func deletePost(atIndexPath indexPath: IndexPath) {
         // MARK:  Ошибка - "An NSManagedObjectContext cannot delete objects in other contexts.".
         // как удалить в бэке?
        /*
@@ -97,7 +98,6 @@ final class CoreDataService {
         loadPosts()
         persistantContainer.viewContext.delete(posts[indexPath.row])
         saveContext()
-        completion()
     }
     
     private func findPosts(byAuthor author: String? = nil, context: NSManagedObjectContext) -> Post? {
