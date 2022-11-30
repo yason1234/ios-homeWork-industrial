@@ -16,9 +16,8 @@ class SelectedPostViewController: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private lazy var fetchController: NSFetchedResultsController = {
         let fetchRequest = Post.fetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "text", ascending: true)]
+        fetchRequest.sortDescriptors = []
         let fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataService.shared.persistantContainer.viewContext, sectionNameKeyPath: nil, cacheName: nil)
-        fetchResultController.delegate = self
         return fetchResultController
     }()
     
@@ -36,29 +35,29 @@ class SelectedPostViewController: UITableViewController {
 
         tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "cell")
         setupSearchViewController()
-        do {
-            try fetchController.performFetch()
-        } catch {
-            print(error)
-        }
         fetchController.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        do {
+            try fetchController.performFetch()
+            tableView.reloadData()
+        } catch {
+            print(error)
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return fetchController.sections?.count ?? 5
+        return fetchController.sections?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return fetchController.sections?[section].numberOfObjects ?? 5//posts.count
+        return fetchController.sections?[section].numberOfObjects ?? 0
     }
 
     
@@ -79,7 +78,8 @@ class SelectedPostViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.updateState(viewInput: .postWillDelete(indexPath))
+             viewModel.updateState(viewInput: .postWillDelete(indexPath))
+//            CoreDataService.shared.deletePost(atIndexPath: indexPath)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -99,24 +99,28 @@ extension SelectedPostViewController: UISearchResultsUpdating, UISearchBarDelega
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-//        coreDataService.loadPosts(searchText: searchText, context: nil)
-//        tableView.reloadData()
+        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+            fetchController.fetchRequest.predicate = NSPredicate(format: "author contains[c] %@", searchText)
+            CoreDataService.shared.saveContext()
+            try? fetchController.performFetch()
+            tableView.reloadData()
+        }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        fetchController.fetchRequest.predicate = nil
+        CoreDataService.shared.saveContext()
+        try? fetchController.performFetch()
+        tableView.reloadData()
     }
 }
 
 extension SelectedPostViewController: NSFetchedResultsControllerDelegate {
     
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.beginUpdates()
-        print("start")
-    }
-    
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
         switch type {
         case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .automatic)
+            tableView.deleteRows(at: [indexPath!], with: .left)
         case .insert:
             tableView.insertRows(at: [newIndexPath!], with: .bottom)
         case .move:
@@ -127,10 +131,5 @@ extension SelectedPostViewController: NSFetchedResultsControllerDelegate {
             fatalError()
         }
     }
-    
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        tableView.endUpdates()
-        tableView.reloadData()
-        print("end")
-    }
+     
 }

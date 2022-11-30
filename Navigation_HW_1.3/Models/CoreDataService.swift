@@ -69,16 +69,11 @@ final class CoreDataService {
                 newPosts.likes = "\(post.likes)"
                 newPosts.views = "\(post.views)"
                 
-//                do {
-//                    try backContext.save()
-//                } catch {
-//                    print(error)
-//                }
-            }
-            do {
-                try backContext.save()
-            } catch {
-                print(error)
+                do {
+                    try backContext.save()
+                } catch {
+                    print(error)
+                }
             }
         }
     }

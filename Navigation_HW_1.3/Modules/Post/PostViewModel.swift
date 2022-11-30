@@ -24,7 +24,6 @@ final class PostViewModel: PostModelProtocol {
     }
     weak var coordinator: PostCoordinator?
     var onStateDidChange: ((State) -> Void)?
-    private let coreDataService = CoreDataService()
     
     private(set) var state: State = .initial {
         didSet {
@@ -35,7 +34,7 @@ final class PostViewModel: PostModelProtocol {
     func updateState(viewInput: ViewInput) {
         switch viewInput {
         case .postWillDelete(let indexPath):
-            coreDataService.deletePost(atIndexPath: indexPath)
+            CoreDataService.shared.deletePost(atIndexPath: indexPath)
         }
     }
 }
